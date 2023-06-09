@@ -1,3 +1,5 @@
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/W7W32691S)
+
 # tapLua
 
 tapLua is a library I made with basic functions that I use in some of my projects.
