@@ -2,7 +2,7 @@
 
 # tapLua
 
-tapLua is a library I made with basic functions that I use in some of my projects.
+tapLua is a library I made with basic functions that I use in some of my projects based for OutFox or StepMania.
 
 ## Usage
 
