@@ -1,7 +1,14 @@
 
-tapLua = { Path = "Appearance/Themes/_fallback/Modules/tapLua/" }
+local path = "Appearance/Themes/_fallback/Modules/tapLua/"
 
-tapLua.OutFox = {}
+if tonumber( VersionDate() ) < 20191216 then
+
+    LoadModule = function(s) loadfile( "Scripts/" .. s )() end
+    path = "/Scripts/tapLua/"
+    
+end
+
+tapLua = { Path = path }            tapLua.OutFox = {}
 
 local loadedFirst = {
     "OutFox/FileManager.lua",       "Data Structures/Table.lua"
