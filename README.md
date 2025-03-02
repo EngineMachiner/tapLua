@@ -3,7 +3,7 @@
 # tapLua
 
 **tapLua** is a **Lua scripting** library for **StepMania and OutFox** developers.
-It features functions for actors, colors, file management, vectors and object type checking. It also includes [**Astro**](https://github.com/EngineMachiner/Astro) and some general sprite actors.
+It features functions for actors, colors, file management, vectors and object type checking. It also includes [**Astro**](https://github.com/EngineMachiner/Astro) and some sprite actors.
 
 tapLua focuses to be compatible with newer game builds, so it may not be compatible with older versions.
 
