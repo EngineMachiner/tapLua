@@ -2,18 +2,19 @@
 
 # tapLua
 
-tapLua is a library that I use in some of StepMania related projects.
+tapLua is a scripting library for StepMania and OutFox developers. It includes Astro as Lua library, sprite scripts, actor, color, file manager, vector functions and game engine object type checking functions.
 
-tapLua has been tested through from StepMania 5.0.12 to 5.3 / OutFox.
+It aims to support recent builds so don't expect support for older versions pre-5.0.12.
+
+It's mainly used in other StepMania related projects like: mind$box, bitEye, foxToys and beat4sprite.
 
 ## Usage
 
 ### OutFox
 
-  1. Copy the tapLua folder to fallback's Modules folder.
-  2. Load tapLua.lua using LoadModule() on the initial fallback screen.
+  1. Clone the repository in the fallback's Modules folder.
+  2. Load it using LoadModule("tapLua/tapLua.lua") once.
 
-### StepMania
+### Legacy
 
-  1. Copy the tapLua folder in your "Stepmania/Scripts" folder.
-  2. Reload scripts once at first screen if something goes wrong.
+  1. Clone the repository in the Scripts folder.
