@@ -13,9 +13,9 @@ It is also used in some of my other StepMania projects.
 
 ### OutFox
 
-  1. Clone the repository in the fallback's Modules folder.
+  1. Clone in the fallback's Modules folder.
   2. Load it using LoadModule("tapLua/tapLua.lua") once.
 
 ### Legacy
 
-  1. Clone the repository in the Scripts folder.
+  1. Clone in the Scripts folder.
