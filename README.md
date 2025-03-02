@@ -13,7 +13,7 @@ It is also used in some of my other StepMania projects.
 
 ### OutFox
 
-  1. Clone in the fallback's Modules folder.
+  1. Clone in fallback's Modules folder.
   2. Load it using LoadModule("tapLua/tapLua.lua") once.
 
 ### Legacy
