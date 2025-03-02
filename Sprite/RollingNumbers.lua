@@ -1,16 +1,20 @@
 
+-- Returns sprites in table that scroll between zero to nine in a 1x9 sprite through a mask.
+-- Like the score bar from DDR 4th MIX.
 
 -- Those 10s constants are around because there's 0-9 frames.
 
-local input = ...           local sheetY = 3            local n = input.Num
+local input = ...           local zoomY = 3            local n = input.Num
 
-local function value(noFormat)
+local function value(formatted)
 
-    local value = input.value()             if noFormat then return tostring(value) end
+    local value = input.value()             if not formatted then return tostring(value) end
 
     return ( '%0' .. n .. 'i' ):format(value)
 
 end
+
+-- Handles scrolling length comparing the last and new value.
 
 local function length( new, last )
 
@@ -22,7 +26,7 @@ end
 
 local function updateValue( self, i )
 
-    local v = value()               local raw = value(true)
+    local v = value(true)               local raw = value()
     
 
     if self.value == v or raw == '0' then return end
@@ -59,9 +63,7 @@ for i = 1, n do
 
         InitCommand=function(self) 
             
-            self.last = '0'
-
-            self:customtexturerect( 0, 0, 1, sheetY )
+            self.last = '0'         self:customtexturerect( 0, 0, 1, zoomY )
 
             self.value = function() return self:GetParent().value end
         
@@ -71,9 +73,9 @@ for i = 1, n do
         
             local h = self:GetZoomedHeight()        self.Height = h / 10
             
-            local offset = h * sheetY - self.Height          offset = offset * 0.5
+            local offset = h * zoomY - self.Height          offset = offset * 0.5
 
-            self:zoomy( self:GetZoomY() * sheetY ):y(offset)
+            self:zoomy( self:GetZoomY() * zoomY ):y(offset)
 
             -- ztestmode -> Inverted mask.
             self:MaskDest():ztestmode("ZTestMode_WriteOnFail")

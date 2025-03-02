@@ -1,6 +1,8 @@
 
 --[[
 
+    Return a table of sprites that split the sprite into 9 parts.
+
     This is how a sprite / frame would be represented by the next sprites in that order:
 
     |1||2||3|
@@ -9,19 +11,21 @@
 
 --]]
 
--- Gotta do some defaults with some metamethods first...
+-- Gotta do set defaults with some metamethods first...
 
 local input = ...
 
-local function meta(t)
-    
-    if type(t) ~= "table" then return end
 
-    t.meta = function( t, m ) setmetatable( t, { __index = m } ) return t end
+local function setMeta( tbl, meta )
+
+    tbl = tbl or {}
+
+    local meta = { __index = meta }         return setmetatable( tbl, meta )
 
 end
 
-for k,v in pairs(input) do meta(v) end          meta(input)
+tbl.setMeta = setMeta
+
 
 local defaults = {
 
@@ -31,12 +35,12 @@ local defaults = {
 
 }
 
-input:meta { cornerCrop = {}, centerCrop = {}, size = {} }
+for k,v in pairs(defaults) do input[k] = setMeta( input[k], v ) end
 
-local cornerCrop = input.cornerCrop:meta( defaults.cornerCrop )
-local centerCrop = input.centerCrop:meta( defaults.centerCrop )
 
-local size = input.size:meta( defaults.size )
+local cornerCrop, centerCrop = input.cornerCrop, input.centerCrop
+
+local size = input.size
 
 local zoom = size.Zoom
 
@@ -90,8 +94,8 @@ local function sprite()
 
             -- Only for the center parts.
 
-            self.setWidth = function() self:SetWidth( size.X * 4 / zoom )     return self end
-            self.setHeight = function() self:SetHeight( size.Y * 4 / zoom )    return self end
+            self.setWidth = function() self:SetWidth( size.X * 4 / zoom ) return self end
+            self.setHeight = function() self:SetHeight( size.Y * 4 / zoom ) return self end
 
         end
 
