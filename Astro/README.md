@@ -26,3 +26,8 @@ The table library attempts to preserve the original metatable and metamethods fr
 ## Contributing
 
 - Run `./build/updateInfo.sh` to update the version in `info.lua`.
+
+## Credits
+- [AwfulRanger](https://github.com/AwfulRanger)
+
+Thank you to everyone who contributed to the development of this project!
