@@ -7,7 +7,9 @@ local isTable = Astro.Type.isTable
 
 local function isObject(a) 
     
-    return isTable(a) and a.AddWrapperState
+    local name = tostring(a)
+
+    return isTable(a) and not name:match("table")
 
 end
 
