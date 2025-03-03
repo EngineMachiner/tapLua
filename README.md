@@ -14,8 +14,21 @@ It is also used in some of my other StepMania projects.
 ### OutFox
 
   1. Clone in fallback's Modules folder.
-  2. Load it using LoadModule("tapLua/tapLua.lua") once.
+  2. Load it using `LoadModule("tapLua/tapLua.lua")` once. This could be done through a script that runs once.
 
 ### Legacy
 
-  1. Clone in the Scripts folder.
+  1. Create a Modules folder in the game's root folder and clone the repository in it.
+  2. Create or load tapLua through a script.
+  3. Make sure the `package.path` for Lua modules includes the `./?/init.lua` path for that game version or else add it.
+  4. Load tapLua through `dofile("Modules/tapLua/tapLua.lua")`.
+
+  Example:
+  ```lua
+  -- Script in /Scripts/ to run once.
+
+  package.path = package.path .. ";./?/init.lua" -- Doesn't include the path.
+
+  dofile("Modules/tapLua/tapLua.lua")
+  ```
+
