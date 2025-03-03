@@ -15,7 +15,7 @@ local modules = { "Config", "Type", "String", "Table" }
 
 local function subRequire()
 
-    local path = Astro.Path
+    local path = Astro.Path         require( path .. "legacy" )
 
     for i,v in ipairs(modules) do
     
