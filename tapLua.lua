@@ -18,7 +18,7 @@ tapLua = { isLegacy = isLegacy,     Load = Load }
 
 local path = "Appearance/Themes/_fallback/Modules/tapLua/"
 
-path = isLegacy() and "Scripts/tapLua/" or path
+path = isLegacy() and "Modules/tapLua/" or path
 
 tapLua.Path = path
 

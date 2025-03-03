@@ -8,12 +8,12 @@
 
 - Table concatenation with format support and cycle detection.
 
-- String manipulation
+- String manipulation:
     - Character substring extraction.
     - Blank or empty strings checks.
     - Check if ends or starts with another sequence.
 
-- Table manipulation
+- Table manipulation:
     - Operations such as addition, substraction, merging and reversing, etc.
     - Functions to retrieve, find and filter keys and values in different ways.
     - Shallow and deep copy functions.
@@ -25,4 +25,4 @@ The table library attempts to preserve the original metatable and metamethods fr
 
 ## Contributing
 
-- Run `./build/updateInfo.sh` to update the version in info.lua
+- Run `./build/updateInfo.sh` to update the version in `info.lua`.
