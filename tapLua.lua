@@ -35,18 +35,14 @@ local subPath = "tapLua/"
 LoadModule( subPath .. "FileManager.lua" )
 
 
-local FILEMAN = tapLua.FILEMAN
-
 -- Exclude tapLua.lua because it would loop forever.
 -- Exclude scripts already loaded.
 
-local blacklist = { 
-    
-    path .. "FileManager.lua",              path .. "Legacy.lua",
-    path .. "Sprite",
+local FILEMAN = tapLua.FILEMAN
 
-    "/Astro", "/tapLua.lua"
-
-}
+local blacklist = { "FileManager.lua", "Legacy.lua", "tapLua.lua" }
 
 FILEMAN.LoadDirectory( path, blacklist )
+
+
+LoadModule( subPath .. "Vector/Vector.lua" )

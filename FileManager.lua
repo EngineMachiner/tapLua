@@ -19,7 +19,7 @@ end
 
 local function isDirectory(path)
 
-    return ActorUtil.GetFileType(path) == 'FileType_Directory'
+    local type = ActorUtil.GetFileType(path)        return type:match('Directory')
 
 end
 
@@ -36,11 +36,7 @@ local function matches( tbl, val )
 end
 
 
-local path = "Appearance/Themes/_fallback/Modules/tapLua/"
-
 local function LoadDirectory( directory, blacklist, recursive )
-
-    if isNil(recursive) then recursive = true end -- Recursive by default.
 
     if isString(directory) then directory = paths( directory ) end
 
@@ -63,7 +59,9 @@ local function LoadDirectory( directory, blacklist, recursive )
         if endsWith then dofile(path) return end
         
 
-        if not isDirectory(path) then return end
+        local isValid = not recursive or not isDirectory(path)
+
+        if isValid then return end
 
         LoadDirectory( path, blacklist, recursive )
 
