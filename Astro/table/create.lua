@@ -1,5 +1,7 @@
 --[[
 
+    This is basically a table factory.
+
     Returns a function to create a table that could 
     have the table functions by default.
 
