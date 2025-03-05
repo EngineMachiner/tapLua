@@ -48,6 +48,4 @@ FILEMAN.LoadDirectory( path, blacklist )
 LoadModule( subPath .. "Vector/Vector.lua" )
 
 
-tapLua.Actor = {}
-
-FILEMAN.LoadDirectory( path .. "Actor/" )
+LoadModule( subPath .. "Actor/Actor.lua" )
