@@ -45,4 +45,6 @@ local function time( self, time, callback )
 
 end
 
-return { time = time, runTimers = runTimers }
+local t = { time = time, runTimers = runTimers }
+
+local actor = tapLua.Actor      tapLua.merge( actor, t )

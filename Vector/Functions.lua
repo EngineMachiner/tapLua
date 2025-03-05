@@ -92,4 +92,4 @@ local t = {
 
 }
 
-astro.merge( tapLua.Vector, t )
+local vector = tapLua.Vector        astro.merge( vector, t )
