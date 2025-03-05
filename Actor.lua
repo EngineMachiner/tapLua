@@ -45,12 +45,4 @@ local function time( self, time, callback )
 
 end
 
----
-
-local function scale(self)
-    
-    local scale = SCREEN_HEIGHT / 720       self:zoom(scale)
-
-end
-
 return { time = time, runTimers = runTimers }
