@@ -45,7 +45,4 @@ local blacklist = { "FileManager.lua", "Legacy.lua", "tapLua.lua" }
 FILEMAN.LoadDirectory( path, blacklist )
 
 
-LoadModule( subPath .. "Vector/Vector.lua" )
-
-
 LoadModule( subPath .. "Actor/Actor.lua" )
