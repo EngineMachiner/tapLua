@@ -1,4 +1,7 @@
 
+local path = Astro.Path .. "Vector/"
+
+
 local astro = Astro.Type
 
 local isTable = astro.isTable
@@ -6,9 +9,7 @@ local isTable = astro.isTable
 astro = Astro.Table
 
 
-local vector = {}       tapLua.Vector = vector
-
-tapLua.Load("Vector/Functions")
+local vector = require( path .. "math" )
 
 
 local coords = { 'x', 'y', 'z' }
@@ -91,13 +92,7 @@ local Meta = {
 
 }
 
-local functions = {
-
-    normSqr = vector.normSqr,           norm = vector.norm,
-    unit = vector.unit,                 isZero = vector.isZero,
-    angle = vector.angle,               unpack = vector.unpack
-
-}
+local functions = astro.Copy.shallow(vector)
 
 local mergeLibs = require( Astro.Path .. "mergeLibs" )
 
@@ -125,7 +120,7 @@ local function builder( __index )
         if isValid then vector = vector[1] end
 
 
-        vector = array( vector ) -- Convert if it's an array.
+        vector = array(vector) -- Convert if it's an array.
 
 
         astro.Meta.setIndex( vector, __index )
@@ -141,3 +136,5 @@ local function builder( __index )
 end
 
 local t = { isVector = isVector, builder = builder }        astro.merge( vector, t )
+
+return vector

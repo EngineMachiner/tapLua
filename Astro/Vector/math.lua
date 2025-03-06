@@ -47,19 +47,16 @@ local function isZero(a)
 
 end
 
-local Vector
+local function unpack(a) return a.x, a.y, a.z end
 
 -- Get angle from a vector in degrees.
 
 local function angle(a)
 
-    Vector = Vector or tapLua.Vector.builder()
-
-
 	local copy = {}        for i,v in ipairs(coords) do copy[v] = a[v] end
 
 
-    local vector = Vector(copy):unit()          local x, y = vector:unpack()
+    local vector = unit(copy)          local x, y = unpack(vector)
 
     
     local angle = math.atan( y / x )          angle = math.deg(angle)
@@ -68,33 +65,11 @@ local function angle(a)
 
 end
 
-local function unpack(a) return a.x, a.y, a.z end
 
-
--- Based on StepMania's orientation.
-
-local directions = {
-
-	Left = { x = -1, y = 0 },			Right = { x = 1, y = 0 },
-	Up = { x = 0, y = -1 },			    Down = { x = 0, y = 1 },
-
-	UpLeft = { x = -1, y = - 1 },		UpRight = { x = 1, y = -1 },
-	DownLeft = { x = -1, y = 1 },		DownRight = { x = 1, y = 1 }
-
-}
-
-for k,v in pairs(directions) do directions[k] = unit(v) end
-
-local function direction(key) return directions[key] end
-
-local t = {
+return {
 
     normSqr = normSqr,              norm = norm,
     unit = unit,                    isZero = isZero,
-    angle = angle,                  unpack = unpack,
-
-    direction = direction
+    angle = angle,                  unpack = unpack
 
 }
-
-local vector = tapLua.Vector        astro.merge( vector, t )

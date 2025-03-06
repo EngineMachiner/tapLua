@@ -157,7 +157,7 @@ local tbl = {
 
     random = random,        find = find,        filter = filter,        sub = sub,
     
-    minus = minus,      minusAll = minusAll,        isEmpty = isEmpty,
+    minus = minus,      isEmpty = isEmpty,
 
     table = function(input) return mergeLibs( input, table ) end
 
@@ -165,10 +165,10 @@ local tbl = {
 
 Astro.Table = tbl -- Store temporarily first.
 
+
 -- We're removing the internal table later.
 
 Astro.Table.Internal = internal
-
 
 local paths = { Array = "array",    Copy = "copy",      Meta = "meta" }
 
