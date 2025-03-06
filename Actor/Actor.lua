@@ -10,7 +10,7 @@ local path = "tapLua/Actor/"
 LoadModule( path .. "Timer.lua" )           LoadModule( path .. "Vector.lua" )
 
 
-local function Actor( self, input )
+local function Actor( tapLua, input )
 
     local class = input.Class
 
@@ -18,7 +18,7 @@ local function Actor( self, input )
 
         InitCommand=function(self)
 
-            for k,v in pairs(Actor) do self[k] = v end
+            for k,v in pairs(tapLua) do self[k] = v end
 
         end
 
@@ -31,7 +31,7 @@ local meta = { __call = Actor }         setmetatable( tapLua.Actor, meta )
 
 local function build( class, input )
 
-    input.Class = class      return Actor(input)
+    input.Class = class      return tapLua.Actor(input)
 
 end
 
