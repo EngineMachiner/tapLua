@@ -7,7 +7,9 @@ local path = "tapLua/Actor/"
 LoadModule( path .. "Timer.lua" )           LoadModule( path .. "Vector.lua" )
 
 
-local function actor( class )
+local function actor( input )
+
+    local class = input.Class
 
     return Def[class] {
 
@@ -17,6 +19,6 @@ local function actor( class )
 
         end
 
-    }
+    } .. input
 
 end
