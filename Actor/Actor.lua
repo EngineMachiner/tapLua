@@ -10,7 +10,7 @@ local path = "tapLua/Actor/"
 LoadModule( path .. "Timer.lua" )           LoadModule( path .. "Vector.lua" )
 
 
-local function actor( input )
+local function Actor( input )
 
     local class = input.Class
 
@@ -32,20 +32,20 @@ local function build( class, input )
 
 end
 
-local function sprite( input ) return build( "Sprite", input ) end
+local function Sprite( input ) return build( "Sprite", input ) end
 
-local function quad( input ) return build( "Quad", input ) end
+local function Quad( input ) return build( "Quad", input ) end
 
-local function actorFrame( input ) return build( "ActorFrame", input ) end
+local function ActorFrame( input ) return build( "ActorFrame", input ) end
 
-local function text( input ) return build( "BitmapText", input ) end
+local function Text( input ) return build( "BitmapText", input ) end
 
 
 local t = {
     
-    actor = actor,      sprite = sprite,        quad = quad,
+    Actor = Actor,      Sprite = Sprite,        Quad = Quad,
 
-    actorFrame = actorFrame,        text = text
+    ActorFrame = ActorFrame,        Text = Text
 
 }
 
