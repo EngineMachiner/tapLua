@@ -43,4 +43,4 @@ local t = {
 
 }
 
-local actor = tapLua.Actor      tapLua.merge( actor, t )
+local actor = tapLua.Actor          Astro.Table.merge( actor, t )

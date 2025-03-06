@@ -16,13 +16,18 @@ local function norm(a)
 
 end
 
+
+local coords = { 'x', 'y', 'z' }
+
 local function unit(a)
     
     local norm = norm(a)
 
-	for k,v in pairs(a) do
+	for i,v in ipairs(coords) do
         
-        if v ~= 0 then a[k] = v / norm end 
+        local k = v         v = a[v]
+        
+        if v and v ~= 0 then a[k] = v / norm end 
     
     end
 
@@ -32,26 +37,38 @@ end
 
 local function isZero(a)
 
-    local function isValid(k) return a[k] ~= 0 end
+    for i,v in ipairs(coords) do 
+        
+        if a[v] ~= 0 then return false end 
+    
+    end
 
-    return not astro.find( a, isValid )
+    return true
 
 end
 
--- Get angle from a vector.
+local Vector
+
+-- Get angle from a vector in degrees.
 
 local function angle(a)
 
-	local vector = DeepCopy( a, {} )        unit(vector)
+    Vector = Vector or tapLua.Vector.builder()
 
-    local x = vector.x or vector[1]
-    local y = vector.y or vector[2]
 
-    local angle = math.atan( y / x )        angle = math.deg(angle)
+	local copy = {}        for i,v in ipairs(coords) do copy[v] = a[v] end
 
+
+    local vector = Vector(copy):unit()          local x, y = vector:unpack()
+
+    
+    local angle = math.atan( y / x )          angle = math.deg(angle)
+    
     return angle % 360
 
 end
+
+local function unpack(a) return a.x, a.y, a.z end
 
 
 -- Based on StepMania's orientation.
@@ -70,25 +87,13 @@ for k,v in pairs(directions) do directions[k] = unit(v) end
 
 local function direction(key) return directions[key] end
 
-local function isVector(a)
-
-    for i = 1, #a do
-        
-        if not isNumber( a[i] ) then return false end
-        
-    end
-
-    return true
-
-end
-
 local t = {
 
     normSqr = normSqr,              norm = norm,
     unit = unit,                    isZero = isZero,
-    angle = angle,
+    angle = angle,                  unpack = unpack,
 
-    direction = direction,          isVector = isVector
+    direction = direction
 
 }
 

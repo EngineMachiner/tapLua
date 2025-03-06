@@ -47,4 +47,4 @@ end
 
 local t = { time = time, runTimers = runTimers }
 
-local actor = tapLua.Actor      tapLua.merge( actor, t )
+local actor = tapLua.Actor          Astro.Table.merge( actor, t )

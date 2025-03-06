@@ -10,7 +10,7 @@ local path = "tapLua/Actor/"
 LoadModule( path .. "Timer.lua" )           LoadModule( path .. "Vector.lua" )
 
 
-local function Actor( input )
+local function Actor( self, input )
 
     local class = input.Class
 
@@ -26,9 +26,12 @@ local function Actor( input )
 
 end
 
+local meta = { __call = Actor }         setmetatable( tapLua.Actor, meta )
+
+
 local function build( class, input )
 
-    input.Class = class      return actor(input)
+    input.Class = class      return Actor(input)
 
 end
 
@@ -43,7 +46,7 @@ local function Text( input ) return build( "BitmapText", input ) end
 
 local t = {
     
-    Actor = Actor,      Sprite = Sprite,        Quad = Quad,
+    Sprite = Sprite,        Quad = Quad,
 
     ActorFrame = ActorFrame,        Text = Text
 
