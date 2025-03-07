@@ -24,33 +24,43 @@ local function array(a)
 
 end
 
+local function copy(a)
+
+    local meta = getmetatable(a)        local b = setmetatable( {}, meta )
+
+    for k,v in pairs(coords) do b[v] = a[v] end         return b
+
+end
+
 local function __add( a, b )
 
-    for k,v in pairs(coords) do a[v] = a[v] + b[v] end
+    local c = copy(a)       for k,v in pairs(coords) do c[v] = a[v] + b[v] end
 
-    return a
+    return c
 
 end
 
 local function __sub( a, b )
 
-    for k,v in pairs(coords) do a[v] = a[v] - b[v] end
+    local c = copy(a)       for k,v in pairs(coords) do c[v] = a[v] - b[v] end
 
-    return a
+    return c
 
 end
 
 local function __mul( a, b ) -- Scalar multiplication.
 
-    for k,v in pairs(coords) do a[v] = a[v] * b end
+    local c = copy(a)       for k,v in pairs(coords) do c[v] = a[v] * b end
 
-    return a
+    return c
 
 end
 
 local function __unm(a)
 
-    for k,v in pairs(a) do a[k] = - v end           return a
+    local c = copy(a)       for k,v in pairs(coords) do c[v] = - a[v] end
+
+    return c
 
 end
 
@@ -98,9 +108,13 @@ local mergeLibs = require( Astro.Path .. "mergeLibs" )
 
 -- No need to have a function that returns the merged libs?
 
+local defaults = { "unpack", "copy" }
+
 local function builder( __index )
 
-    __index = __index or {}         table.insert( __index, "unpack" ) -- Add unpack by default.
+    __index = __index or {}
+    
+    astro.Array.add( __index, defaults ) -- Add defaults.
     
     __index = mergeLibs( __index, functions )
     
