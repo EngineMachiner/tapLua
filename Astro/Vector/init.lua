@@ -24,14 +24,6 @@ local function array(a)
 
 end
 
-local function copy(a)
-
-    local meta = getmetatable(a)        local b = setmetatable( {}, meta )
-
-    for k,v in pairs(coords) do b[v] = a[v] end         return b
-
-end
-
 local function __add( a, b )
 
     local c = copy(a)       for k,v in pairs(coords) do c[v] = a[v] + b[v] end
@@ -149,6 +141,10 @@ local function builder( __index )
 
 end
 
+
 local t = { isVector = isVector, builder = builder }        astro.merge( vector, t )
 
-return vector
+
+local meta = { __call = builder() } -- tapLua.Vector metatable.
+
+return setmetatable( vector, meta )

@@ -2,9 +2,11 @@
 local astro = Astro.Table
 
 
+local coords = { 'x', 'y', 'z' }
+
 local function normSqr(a)
 
-    local b = 0         for k,v in pairs(a) do b = b + v ^ 2 end
+    local b = 0         for k,v in pairs(coords) do b = b + a[v] ^ 2 end
 
     return b
 
@@ -16,8 +18,13 @@ local function norm(a)
 
 end
 
+local function copy(a)
 
-local coords = { 'x', 'y', 'z' }
+    local meta = getmetatable(a)        local b = setmetatable( {}, meta )
+
+    for k,v in pairs(coords) do b[v] = a[v] end         return b
+
+end
 
 local function unit(a)
     
@@ -53,15 +60,11 @@ local function unpack(a) return a.x, a.y, a.z end
 
 local function angle(a)
 
-	local copy = {}        for i,v in ipairs(coords) do copy[v] = a[v] end
-
-
-    local vector = unit(copy)          local x, y = unpack(vector)
-
+	local vector = copy(a)      vector = unit(vector)
     
-    local angle = math.atan( y / x )          angle = math.deg(angle)
+    local x, y = unpack(vector)         local angle = math.atan( y / x )
     
-    return angle % 360
+    angle = math.deg(angle)         return angle % 360
 
 end
 
@@ -70,6 +73,7 @@ return {
 
     normSqr = normSqr,              norm = norm,
     unit = unit,                    isZero = isZero,
-    angle = angle,                  unpack = unpack
+    angle = angle,                  unpack = unpack,
+    copy = copy
 
 }
