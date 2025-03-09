@@ -17,16 +17,30 @@ local function startsWith( s1, s2 ) return s1:match( '^' .. s2 ) end
 
 local function endsWith( s1, s2 ) return s1:match( s2 .. '$' ) end
 
-local mergeLibs = require( Astro.Path .. "mergeLibs" )
-
-return {
+local t = {
 
     subChar = subChar,      first = first,      last = last,
 
     isEmpty = isEmpty,          isBlank = isBlank,
 
-    startsWith = startsWith,            endsWith = endsWith,
-
-    string = function(input) return mergeLibs( input, string ) end
+    startsWith = startsWith,            endsWith = endsWith
 
 }
+
+string.Astro = function(s)
+
+    local __index = function( table, key )
+        
+        local f = t[key]        if not f then return end
+
+        return function( table, ... ) return f( s, ... ) end
+    
+    end
+
+    local meta = { __index = __index }
+
+    return setmetatable( {}, meta )
+
+end
+
+return t

@@ -6,9 +6,7 @@ local astro = Astro.Type
 local isFunction = astro.isFunction
 
 
--- Default builder => Simple operations.
-
-local Vector = tapLua.Vector.builder()
+local Vector = Astro.Vector -- Default builder => Simple operations.
 
 local function builder( input )
 
@@ -38,7 +36,7 @@ end
 
 local function GetRotationVector( self, input )
 
-    return get( input, self:getrotation() )
+    return get( true, self:getrotation() )
 
 end
 
@@ -87,13 +85,21 @@ local function setRotation( self, vector )
     
     local x, y, z = vector:unpack()         self:rotationx(x):rotationy(y):rotationz(z)
 
+    return self
+
 end
 
-local function setSizeVector( self, vector ) self:setsize(  vector:unpack()  ) end
+local function setSizeVector( self, vector ) 
+    
+    self:setsize( vector:unpack() )         return self
+
+end
 
 local function setZoomVector( self, vector ) 
     
     local x, y, z = vector:unpack()         self:zoomto( x, y ):zoomz(z)
+
+    return self
 
 end
 
@@ -101,8 +107,9 @@ local function setPos( self, vector )
     
     local x, y, z = vector:unpack()         self:xy( x, y ):z(z)
 
-end
+    return self
 
+end
 
 local t = {
     

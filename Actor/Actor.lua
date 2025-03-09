@@ -5,9 +5,9 @@ local astro = Astro.Table
 local Actor = {}        tapLua.Actor = Actor
 
 
-local path = "tapLua/Actor/"
+local path = tapLua.Path .. "Actor/"
 
-LoadModule( path .. "Timer.lua" )           LoadModule( path .. "Vector.lua" )
+tapLua.FILEMAN.LoadDirectory( path, "Actor.lua" )
 
 
 local function Actor( tapLua, input )

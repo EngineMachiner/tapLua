@@ -4,14 +4,14 @@ local astro = Astro.Type
 local isNil = astro.isNil
 local isString = astro.isString
 
-local endsWith = Astro.String.endsWith
-
 astro = Astro.Table
 
 
 local function paths( directory )
 
-    if not endsWith( directory, '/' ) then directory = directory .. '/' end
+    local endsWith = directory:Astro():endsWith('/')
+
+    if not endsWith then directory = directory .. '/' end
 
     return FILEMAN:GetDirListing( directory, false, true )
 
@@ -54,7 +54,7 @@ local function LoadDirectory( directory, blacklist, recursive )
         if isBlacklisted(path) then return end
 
 
-        local endsWith = endsWith( path, "%.lua" )
+        local endsWith = path:Astro():endsWith("%.lua")
 
         if endsWith then dofile(path) return end
         
