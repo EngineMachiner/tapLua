@@ -43,6 +43,11 @@ local function ActorFrame( input ) return build( "ActorFrame", input ) end
 
 local function Text( input ) return build( "BitmapText", input ) end
 
+local function extend( actor, lib )
+
+    lib = lib or Actor.Vector       astro.merge( actor, lib )       return actor
+
+end
 
 local t = {
     
