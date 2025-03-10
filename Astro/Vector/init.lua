@@ -116,7 +116,7 @@ local function builder( __index )
     for i,v in ipairs(coords) do __index[v] = __index[v] or 0 end
 
 
-    return function(...)
+    return function( Vector, ...)
     
         local vector = {...}
         
