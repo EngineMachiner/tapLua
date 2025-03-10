@@ -9,6 +9,27 @@ local path = tapLua.Path .. "Actor/"
 
 tapLua.FILEMAN.LoadDirectory( path, "Actor.lua" )
 
+local Vector = Actor.Vector        Actor.Vector = nil
+
+
+local function lib(keys)
+
+    if not keys then return Vector end
+
+
+    local function isValid( k, v ) return astro.find( lib, k ) end
+
+    return astro.filter( Actor, isValid )
+
+end
+
+-- Extend vector library by default.
+
+Actor.extend = function( actor, keys )
+
+    local lib = lib(keys)       astro.merge( actor, lib )       return actor
+
+end
 
 local function Actor( tapLua, input )
 
@@ -19,6 +40,8 @@ local function Actor( tapLua, input )
         InitCommand=function(self)
 
             for k,v in pairs(tapLua) do self[k] = v end
+
+            self.extend = nil -- It's not logical.
 
         end
 
@@ -42,12 +65,6 @@ local function Quad( input ) return build( "Quad", input ) end
 local function ActorFrame( input ) return build( "ActorFrame", input ) end
 
 local function Text( input ) return build( "BitmapText", input ) end
-
-Actor.extend = function( actor, lib )
-
-    lib = lib or Actor.Vector       astro.merge( actor, lib )       return actor
-
-end
 
 local t = {
     

@@ -18,6 +18,8 @@ local action = internal.action
 local meta = internal.meta
 
 
+local function pair( k, v ) return { key = k, value = v } end
+
 local function merge( to, from )
 
     for k,v in pairs(from) do to[k] = v end         return to
@@ -52,20 +54,24 @@ end
 
 local function isValid( tbl, x )
 
-    local default = function(k) return tbl[k] == x end
+    local default = function( k, v ) return v == x end
 
     return isFunction(x) and x or default
 
 end
 
--- Returns a value and key if the value is found.
+-- Returns a pair with the key and value if the value is found.
 -- The x parameter can be the function to compare or the value to search.
 
 local function find( tbl, x )
 
     local isValid = isValid( tbl, x )
 
-    for k,v in pairs(tbl) do    if isValid(k) then return v, k end  end
+    for k,v in pairs(tbl) do
+
+        if isValid( k, v ) then return pair( k, v ) end
+    
+    end
     
 end
 
@@ -134,7 +140,7 @@ end
 
 local function minus( tbl, val )
 
-    local t = {}        local val, key = find( tbl, val )
+    local t = {}        local key = find( tbl, val ).key
 
     for k,v in pairs(tbl) do if k ~= key then t[k] = v end end
 
@@ -157,7 +163,7 @@ local tbl = {
 
     random = random,        find = find,        filter = filter,        sub = sub,
     
-    minus = minus,      isEmpty = isEmpty,
+    minus = minus,      isEmpty = isEmpty,      pair = pair,
 
     table = function(input) return mergeLibs( input, table ) end
 

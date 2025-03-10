@@ -12,7 +12,7 @@ local function isColor(a)
 
     -- It's a color if it doesn't find any non numbers.
 
-    local function isValid(k) return not isNumber( a[k] ) end
+    local function isValid( k, v ) return not isNumber(v) end
 
     return not astro.find( a, isValid )
 

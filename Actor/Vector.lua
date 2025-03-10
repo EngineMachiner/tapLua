@@ -124,4 +124,6 @@ local t = {
 
 }
 
+tapLua.Actor.Vector = t -- Will be removed in Actor.lua
+
 local actor = tapLua.Actor          Astro.Table.merge( actor, t )

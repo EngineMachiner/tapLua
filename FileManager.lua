@@ -25,11 +25,7 @@ end
 
 local function matches( tbl, val )
 
-    local isValid = function(k) 
-        
-        local v = tbl[k]        return val:match(v) 
-    
-    end
+    local isValid = function( k, v ) return val:match(v) end
 
     return astro.find( tbl, isValid )
 
