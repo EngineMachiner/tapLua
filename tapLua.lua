@@ -48,6 +48,6 @@ LoadModule( subPath .. "Actor/Actor.lua" )
 
 tapLua.screenSize = function()
     
-    return tapLua.Vector( SCREEN_WIDTH, SCREEN_HEIGHT ) 
+    return Astro.Vector( SCREEN_WIDTH, SCREEN_HEIGHT ) 
 
 end
