@@ -53,7 +53,7 @@ local t = {
     
     Sprite = Sprite,        Quad = Quad,        ActorFrame = ActorFrame,
     
-    Text = Text
+    Text = Text,        extend = extend
 
 }
 
