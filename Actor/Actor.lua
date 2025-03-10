@@ -17,7 +17,7 @@ local function lib(keys)
     if not keys then return Vector end
 
 
-    local function isValid( k, v ) return astro.find( lib, k ) end
+    local function isValid( k, v ) return astro.contains( lib, k ) end
 
     return astro.filter( Actor, isValid )
 

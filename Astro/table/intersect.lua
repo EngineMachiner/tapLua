@@ -9,7 +9,7 @@ return function( a, b, distinct )
 
     local function isValid( k, v )
 
-        local isDistinct = distinct and astro.find( t, v )
+        local isDistinct = distinct and astro.contains( t, v )
 
         if t[k] or isDistinct then return end
         

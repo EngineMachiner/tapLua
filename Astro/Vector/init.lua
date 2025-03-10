@@ -11,6 +11,8 @@ astro = Astro.Table
 
 local vector = require( path .. "math" )
 
+local copy = vector.copy
+
 
 local coords = { 'x', 'y', 'z' }
 

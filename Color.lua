@@ -14,7 +14,7 @@ local function isColor(a)
 
     local function isValid( k, v ) return not isNumber(v) end
 
-    return not astro.find( a, isValid )
+    return not astro.contains( a, isValid )
 
 end
 

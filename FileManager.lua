@@ -27,7 +27,7 @@ local function matches( tbl, val )
 
     local isValid = function( k, v ) return val:match(v) end
 
-    return astro.find( tbl, isValid )
+    return astro.contains( tbl, isValid )
 
 end
 

@@ -77,6 +77,12 @@ local function find( tbl, x )
     
 end
 
+local function contains( tbl, x )
+    
+    return find( tbl, x ).value and true
+
+end
+
 --[[
 
     Returns filtered values using a function with the key as argument.
@@ -163,7 +169,9 @@ local tbl = {
     
     merge = merge,          keys = keys,        values = values,
 
-    random = random,        find = find,        filter = filter,        sub = sub,
+    random = random,        find = find,        filter = filter,        
+    
+    contains = contains,        sub = sub,
     
     minus = minus,      isEmpty = isEmpty,      pair = pair,
 
