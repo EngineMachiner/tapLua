@@ -72,6 +72,8 @@ local function find( tbl, x )
         if isValid( k, v ) then return pair( k, v ) end
     
     end
+
+    return {}
     
 end
 
