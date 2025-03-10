@@ -44,3 +44,10 @@ tapLua.FILEMAN.LoadDirectory( path, blacklist )
 
 
 LoadModule( subPath .. "Actor/Actor.lua" )
+
+
+tapLua.screenSize = function()
+    
+    return tapLua.Vector( SCREEN_WIDTH, SCREEN_HEIGHT ) 
+
+end
