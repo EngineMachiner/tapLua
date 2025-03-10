@@ -10,15 +10,9 @@ local Vector = Astro.Vector -- Default builder => Simple operations.
 
 local function builder( input )
 
-    if not input then return end
+    if not input then return Vector end
 
-
-    local isDefault = not isFunction(input)
-
-    if isDefault then return Vector end
-
-    
-    return input
+    if isFunction(input) then return input end
 
 end
 

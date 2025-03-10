@@ -43,7 +43,7 @@ astro.Meta.setIndex( input, defaults )
 
 local size = input.size             local zoom = size.Zoom
 
-local cornerCrop, centerCrop = input.cornerCrop, input.centerCrop
+local cornerCrop = input.cornerCrop         local centerCrop = input.centerCrop
 
 local function onChildren(self)
 
@@ -100,7 +100,7 @@ return Def.ActorFrame {
 
         InitCommand=function(self)
 
-            offset = getOffset(self)        self:xy( offset.x, offset.y )
+            offset = getOffset(self)        self:SetSize(offset)
 
             self:cropright( cornerCrop.x ):cropbottom( cornerCrop.y )
 
@@ -196,7 +196,7 @@ return Def.ActorFrame {
 
         InitCommand=function(self)
             
-            self:xy( - offset.x, - offset.y )
+            self:SetSize( - offset )
 
             self:cropleft( cornerCrop.x ):croptop( cornerCrop.y )
         
