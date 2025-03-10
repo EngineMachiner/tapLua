@@ -20,6 +20,8 @@ local coords = { 'x', 'y', 'z' }
 
 local function array(a)
 
+    if a.x then return a end
+
     for k,v in pairs(coords) do a[v] = a[k]     a[k] = nil end
 
 	return a
