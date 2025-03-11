@@ -10,11 +10,11 @@
         value - The function that returns the input numbers.
         Number - The number of scrolling numbers.
 
-        Background - The function that returns an ActorFrame that should 
+        background - The function that returns an ActorFrame that should 
         be behind a single sprite number.
 
-        Mask - The quad or mask actor.
-        Sprite - The sprite sheet with the (stretch) property.
+        mask - The quad or mask actor.
+        sprite - The sprite sheet with the (stretch) property.
 
     }
 
@@ -22,9 +22,9 @@
 
 ]]
 
-local input = ...       local n = input.Number          local Background = input.Background
+local input = ...       local n = input.Number          local background = input.background
 
-local Mask = input.Mask         local Sprite = input.Sprite
+local mask = input.mask         local sprite = input.sprite
 
 
 local function value( formatted )
@@ -48,7 +48,7 @@ end
 
 local t = Def.ActorFrame {
     
-    Mask() .. { InitCommand=function(self) self:MaskSource(true) end }
+    mask() .. { InitCommand=function(self) self:MaskSource(true) end }
 
 }
 
@@ -77,7 +77,7 @@ local zoomY = 3
 
 for i = 1, n do
     
-    local Sprite = Sprite() .. {
+    local Sprite = sprite() .. {
 
         InitCommand=function(self) self:customtexturerect( 0, 0, 1, zoomY ) end,
 
@@ -136,7 +136,7 @@ for i = 1, n do
 
         UpdateCommand=function(self) update( self, i ) end,
         
-        Background(i),      Sprite
+        background(i),      Sprite
 
     }
 
