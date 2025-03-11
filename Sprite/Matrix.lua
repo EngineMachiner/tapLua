@@ -12,10 +12,10 @@
     Parameters: {
     
         sprite - The tapLua Sprite template to use.
-        cornerCrop - Vector, how much should be cropped from the corners.
-        centerCrop - Vector, how much should be cropped from the centers.
-        zoom - The zoom to be done to all the elements.
-        size - The size from the matrix.
+        CornerCrop - Vector, how much should be cropped from the corners.
+        CenterCrop - Vector, how much should be cropped from the centers.
+        Zoom - The zoom to be done to all the elements.
+        Size - The size from the matrix.
 
     }
 
@@ -32,18 +32,18 @@ local input = ...
 
 local defaults = {
 
-    cornerCrop = Vector { x = 0, y = 0 },          centerCrop = Vector { x = 0, y = 0 },
+    CornerCrop = Vector(),          CenterCrop = Vector(),
     
-    size = Vector { x = 0, y = 0 },         zoom = 1
+    Size = Vector(),         Zoom = 1
 
 }
 
 astro.Meta.setIndex( input, defaults )
 
 
-local size = input.size             local zoom = size.Zoom
+local Size = input.Size             local Zoom = input.Zoom
 
-local cornerCrop = input.cornerCrop         local centerCrop = input.centerCrop
+local CornerCrop = input.CornerCrop         local CenterCrop = input.CenterCrop
 
 local function onChildren(self)
 
@@ -57,11 +57,11 @@ end
 
 local function getOffset(self)
    
-    local cropX = centerCrop.x          local cropY = centerCrop.y
+    local cropX = CenterCrop.x          local cropY = CenterCrop.y
 
     self:cropHorizontally( cropX ):cropVertically( cropY )
 
-    local offset = self:GetCroppedZoomedSize() - size
+    local offset = self:GetCroppedZoomedSize() - Size
 
     self:cropHorizontally(0):cropVertically(0) -- Set back to 0.
 
@@ -75,12 +75,12 @@ local function sprite()
 
         InitCommand=function(self)
         
-            self:zoom(zoom)         local scale = 4 / zoom
+            self:zoom(Zoom)         local scale = 4 / Zoom
 
             -- Only for the center parts.
 
-            self.setWidth = function() self:SetWidth( size.x * scale ) return self end
-            self.setHeight = function() self:SetHeight( size.y * scale ) return self end
+            self.setWidth = function() self:SetWidth( Size.x * scale ) return self end
+            self.setHeight = function() self:SetHeight( Size.y * scale ) return self end
 
         end
 
@@ -102,7 +102,7 @@ return Def.ActorFrame {
 
             offset = getOffset(self)        self:SetSize(offset)
 
-            self:cropright( cornerCrop.x ):cropbottom( cornerCrop.y )
+            self:cropright( CornerCrop.x ):cropbottom( CornerCrop.y )
 
         end
 
@@ -114,7 +114,7 @@ return Def.ActorFrame {
             
             self:y( offset.y )         self:setWidth()
 
-            self:cropHorizontally( centerCrop.x ):cropbottom( cornerCrop.y )
+            self:cropHorizontally( CenterCrop.x ):cropbottom( CornerCrop.y )
 
         end
 
@@ -126,7 +126,7 @@ return Def.ActorFrame {
 
             self:xy( - offset.x, offset.y )
             
-            self:cropleft( cornerCrop.x ):cropbottom( cornerCrop.y )
+            self:cropleft( CornerCrop.x ):cropbottom( CornerCrop.y )
 
         end
 
@@ -138,7 +138,7 @@ return Def.ActorFrame {
 
             self:x( offset.x )          self:setHeight()
 
-            self:cropright( cornerCrop.x ):cropVertically( centerCrop.y )
+            self:cropright( CornerCrop.x ):cropVertically( CenterCrop.y )
 
         end
 
@@ -150,7 +150,7 @@ return Def.ActorFrame {
 
             self:setWidth():setHeight()
 
-            self:cropHorizontally( centerCrop.x ):cropVertically( centerCrop.y )
+            self:cropHorizontally( CenterCrop.x ):cropVertically( CenterCrop.y )
 
         end
 
@@ -162,7 +162,7 @@ return Def.ActorFrame {
             
             self:x( - offset.x )        self:setHeight()
 
-            self:cropleft( cornerCrop.x ):cropVertically( centerCrop.y )
+            self:cropleft( CornerCrop.x ):cropVertically( CenterCrop.y )
 
         end
 
@@ -174,7 +174,7 @@ return Def.ActorFrame {
 
             self:xy( offset.x, - offset.y )
             
-            self:cropright( cornerCrop.x ):croptop( cornerCrop.y )
+            self:cropright( CornerCrop.x ):croptop( CornerCrop.y )
 
         end
 
@@ -186,7 +186,7 @@ return Def.ActorFrame {
 
             self:y( - offset.y )        self:setWidth()
 
-            self:cropHorizontally( centerCrop.x ):croptop( cornerCrop.y )
+            self:cropHorizontally( CenterCrop.x ):croptop( CornerCrop.y )
 
         end
 
@@ -198,7 +198,7 @@ return Def.ActorFrame {
             
             self:SetSize( - offset )
 
-            self:cropleft( cornerCrop.x ):croptop( cornerCrop.y )
+            self:cropleft( CornerCrop.x ):croptop( CornerCrop.y )
         
         end
 
