@@ -33,7 +33,7 @@ end
 
 local function Actor( tapLua, input )
 
-    local class = input.Class
+    local class = input.Class       input.Class = nil
 
     return Def[class] {
 
