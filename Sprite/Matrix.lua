@@ -92,15 +92,15 @@ local offset
 
 return Def.ActorFrame {
 
-    InitCommand=function(self) self.Size = Vector() end,
+    InitCommand=function(self) self.Size = Vector()     self:playcommand("PostInit") end,
 
     OnCommand=function(self) self:RunCommandsOnChildren(onChildren) end,
 
     sprite() .. {
 
-        InitCommand=function(self)
+        PostInitCommand=function(self)
 
-            offset = getOffset(self)        self:SetSize(offset)
+            offset = getOffset(self)        self:setPos(offset)
 
             self:cropright( CornerCrop.x ):cropbottom( CornerCrop.y )
 
@@ -110,7 +110,7 @@ return Def.ActorFrame {
 
     sprite() .. {
 
-        InitCommand=function(self) 
+        PostInitCommand=function(self) 
             
             self:y( offset.y )         self:setWidth()
 
@@ -122,7 +122,7 @@ return Def.ActorFrame {
 
     sprite() .. {
 
-        InitCommand=function(self) 
+        PostInitCommand=function(self) 
 
             self:xy( - offset.x, offset.y )
             
@@ -134,7 +134,7 @@ return Def.ActorFrame {
 
     sprite() .. {
 
-        InitCommand=function(self)
+        PostInitCommand=function(self)
 
             self:x( offset.x )          self:setHeight()
 
@@ -146,7 +146,7 @@ return Def.ActorFrame {
 
     sprite() .. {
 
-        InitCommand=function(self)
+        PostInitCommand=function(self)
 
             self:setWidth():setHeight()
 
@@ -158,7 +158,7 @@ return Def.ActorFrame {
     
     sprite() .. {
 
-        InitCommand=function(self) 
+        PostInitCommand=function(self) 
             
             self:x( - offset.x )        self:setHeight()
 
@@ -170,7 +170,7 @@ return Def.ActorFrame {
 
     sprite() .. {
 
-        InitCommand=function(self)
+        PostInitCommand=function(self)
 
             self:xy( offset.x, - offset.y )
             
@@ -182,7 +182,7 @@ return Def.ActorFrame {
 
     sprite() .. {
 
-        InitCommand=function(self)
+        PostInitCommand=function(self)
 
             self:y( - offset.y )        self:setWidth()
 
@@ -194,9 +194,9 @@ return Def.ActorFrame {
     
     sprite() .. {
 
-        InitCommand=function(self)
+        PostInitCommand=function(self)
             
-            self:SetSize( - offset )
+            self:setPos( - offset )
 
             self:cropleft( CornerCrop.x ):croptop( CornerCrop.y )
         

@@ -39,7 +39,7 @@ end
 
 local function length( new, last )
 
-    local length = new - last          local isHigher = new > last
+    local length = new - last          local isHigher = new <= last
     
     return isHigher and length + 10 or length
     
@@ -84,13 +84,15 @@ for i = 1, n do
         OnCommand=function(self)
         
             local h1 = self:GetZoomedHeight() -- Texture height.
-            
+
             local h2 = h1 / 10 -- Number height.
             
 
             local y = h1 * zoomY - h2           y = y * 0.5
 
-            self:y(y):zoomy(zoomY)              tapLua.Actor.invertedMaskDest(self)
+            self:y(y):zoomy( self:GetZoomY() * zoomY )
+            
+            tapLua.Actor.invertedMaskDest(self)
 
             
             self.Height = h2            self.Limit = y - h1
@@ -103,7 +105,7 @@ for i = 1, n do
 
             local last = self.last or '0'
             
-            local new = self:GetParent():value()        new = new:Astro():subChar(i)
+            local new = self:GetParent().value        new = new:Astro():subChar(i)
 
             if new == last then return end
 
@@ -124,7 +126,7 @@ for i = 1, n do
 
             ]] 
 
-            local y2 = y1 + self:GetZoomedHeight()
+            local y2 = y1 + self.Height * 10
 
             if y1 <= self.Limit then self:sleep(0):y(y2) end
 
@@ -132,13 +134,17 @@ for i = 1, n do
 
     }
 
-    t[#t+1] = Def.ActorFrame {
 
-        UpdateCommand=function(self) update( self, i ) end,
-        
-        background(i),      Sprite
+    local background = background(i) .. {
 
-    }
+        UpdateCommand=function(self) update( self, i ) end
+
+    }  
+    
+    table.insert( background, Sprite )
+
+
+    t[#t+1] = background
 
 end
 

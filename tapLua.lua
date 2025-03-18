@@ -46,8 +46,30 @@ tapLua.FILEMAN.LoadDirectory( path, blacklist )
 LoadModule( subPath .. "Actor/Actor.lua" )
 
 
-tapLua.screenSize = function()
+local Vector = Astro.Vector
+
+local function screenSize()
     
-    return Astro.Vector( SCREEN_WIDTH, SCREEN_HEIGHT ) 
+    return Vector( SCREEN_WIDTH, SCREEN_HEIGHT ) 
 
 end
+
+local function center()
+    
+    return Vector( SCREEN_CENTER_X, SCREEN_CENTER_Y )
+
+end
+
+local function resolvePath( path, stackLevel )
+
+    stackLevel = stackLevel or 2            if not path then return end
+
+    if path:Astro():startsWith("[\\/]") then return path end
+
+    return "/" .. ResolveRelativePath( path, stackLevel )
+
+end
+
+local t = { screenSize = screenSize,    center = center,    resolvePath = resolvePath }
+
+Astro.Table.merge( tapLua, t )

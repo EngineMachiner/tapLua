@@ -1,6 +1,8 @@
 
 local astro = Astro.Table
 
+local function resolvePath(path) return tapLua.resolvePath( path, 3 ) end
+
 
 local Actor = {}        tapLua.Actor = Actor
 
@@ -10,6 +12,13 @@ local path = tapLua.Path .. "Actor/"
 tapLua.FILEMAN.LoadDirectory( path, "Actor.lua" )
 
 local Vector = Actor.Vector        Actor.Vector = nil
+
+
+local function setMeta( f, tbl )
+
+    local meta = { __call = f }         setmetatable( tbl, meta )
+
+end
 
 
 local function lib(keys)
@@ -49,7 +58,7 @@ local function Actor( tapLua, input )
 
 end
 
-local meta = { __call = Actor }         setmetatable( tapLua.Actor, meta )
+setMeta( Actor, tapLua.Actor )
 
 
 local function build( class, input )
@@ -58,17 +67,33 @@ local function build( class, input )
 
 end
 
-local function Sprite( input ) return build( "Sprite", input ) end
+
+local Sprite = {}        tapLua.Sprite = Sprite
+
+local function Sprite( tapLua, input )
+
+    input.Texture = resolvePath( input.Texture )
+
+    return build( "Sprite", input ) 
+
+end
+
+setMeta( Sprite, tapLua.Sprite )
+
 
 local function Quad( input ) return build( "Quad", input ) end
 
 local function ActorFrame( input ) return build( "ActorFrame", input ) end
 
-local function Text( input ) return build( "BitmapText", input ) end
+local function Text( input ) 
+    
+    input.Font = resolvePath( input.Font )           return build( "BitmapText", input ) 
+
+end
 
 local t = {
     
-    Sprite = Sprite,        Quad = Quad,        ActorFrame = ActorFrame,
+    Quad = Quad,        ActorFrame = ActorFrame,
     
     Text = Text,        extend = extend
 
