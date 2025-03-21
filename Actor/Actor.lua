@@ -72,9 +72,7 @@ local Sprite = {}        tapLua.Sprite = Sprite
 
 local function Sprite( tapLua, input )
 
-    input.Texture = resolvePath( input.Texture )
-
-    return build( "Sprite", input ) 
+    input.Texture = resolvePath( input.Texture )        return build( "Sprite", input ) 
 
 end
 
