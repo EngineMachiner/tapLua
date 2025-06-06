@@ -1,14 +1,14 @@
 
-local function runTimer( self, data )
+local function runTimer( self, timer )
 
-    local function isValid() return data.Time < data.Limit end
+    local function isValid() return timer.Time < timer.Limit end
 
     if not isValid() then return end
 
 
-    data.Time = data.Time + self:GetEffectDelta()
+    timer.Time = timer.Time + self:GetEffectDelta()
 
-    if not isValid() then data.callback() end
+    if not isValid() then timer:callback(self) end
 
 end
 
@@ -16,35 +16,23 @@ end
 
 local function runTimers(self)
 
-    local data = self.tapLua
-    
-    if not data or not data.Timers then return end
-
-
-    data = data.Timers
-
-    for k,v in pairs(data) do runTimer( self, v ) end
+    local timers = self.tapLua.Timers            for k,v in pairs(timers) do runTimer( self, v ) end
 
 end
 
 
-local function data() return { Timers = {} } end
+-- Create the timer to run a function later.
 
--- Create the data to run a function later.
+local function timer( self, time, callback )
 
-local function time( self, time, callback )
-
-    self.tapLua = self.tapLua or data()
-
-
-    local data = self.tapLua.Timers
+    local timers = self.tapLua.Timers
 
     local timer = { Time = 0, Limit = time, callback = callback }
 
-    table.insert( data, timer )
+    table.insert( timers, timer )             return timer
 
 end
 
-local t = { time = time, runTimers = runTimers }
+local t = { timer = timer, runTimers = runTimers }
 
 local actor = tapLua.Actor          Astro.Table.merge( actor, t )

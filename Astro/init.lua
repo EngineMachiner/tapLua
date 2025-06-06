@@ -18,7 +18,7 @@ local paths = { Vector = true }
 
 local function name(key) return paths[key] and key or key:lower() end
 
-local modules = { "Config", "Type", "String", "Table", "Vector" }
+local modules = { "Config", "Type", "String", "Table", "Vector", "Layout" }
 
 local function subRequire()
 

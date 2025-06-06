@@ -20,6 +20,24 @@ local meta = internal.meta
 
 local function pair( k, v ) return { key = k, value = v } end
 
+local function value( new, current )
+
+    local isVector = Astro.Vector.isVector              if not isTable(new) then return new end
+
+    if isVector(new) then return new:copy() end         current = current or {}
+    
+    for k,v in pairs(new) do current[k] = value( v, current[k] ) end
+
+    return current
+
+end
+
+local function deepMerge( to, from )
+
+    for k,v in pairs(from) do to[k] = value( v, to[k] ) end         return to
+
+end
+
 local function merge( to, from )
 
     for k,v in pairs(from) do to[k] = v end         return to
@@ -167,6 +185,8 @@ local mergeLibs = require( Astro.Path .. "mergeLibs" )
 
 local tbl = {
     
+    deepMerge = deepMerge,
+
     merge = merge,          keys = keys,        values = values,
 
     random = random,        find = find,        filter = filter,        

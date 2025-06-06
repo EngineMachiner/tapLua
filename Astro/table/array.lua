@@ -1,11 +1,8 @@
 
-local astro = Astro.Type
+local isTable = Astro.Type.isTable
 
-local isTable = astro.isTable
+local astro = Astro.Table           local meta = astro.Internal.meta
 
-astro = Astro.Table
-
-local meta = astro.Internal.meta
 
 local function last(tbl) return tbl[#tbl] end
 
@@ -15,12 +12,8 @@ local function add( to, from )
 
 end
 
---[[
 
-    Returns a table with the first table values without
-    the values of the other table.
-
-]]
+-- Returns a table with the first table values without the values of the other table.
 
 local function sub( a, b )
 

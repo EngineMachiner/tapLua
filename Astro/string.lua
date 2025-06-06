@@ -37,9 +37,9 @@ string.Astro = function(s)
     
     end
 
-    local meta = { __index = __index }
+    local setIndex = Astro.Table.Meta.setIndex
 
-    return setmetatable( {}, meta )
+    return setIndex( {}, __index )
 
 end
 

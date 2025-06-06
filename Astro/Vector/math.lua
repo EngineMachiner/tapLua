@@ -2,11 +2,11 @@
 local astro = Astro.Table
 
 
-local coords = { 'x', 'y', 'z' }
+local planeAxes = { 'x', 'y' }         local spaceAxes = { 'x', 'y', 'z' }
 
 local function normSqr(a)
 
-    local b = 0         for k,v in pairs(coords) do b = b + a[v] ^ 2 end
+    local b = 0         for i,v in ipairs(spaceAxes) do b = b + a[v] ^ 2 end
 
     return b
 
@@ -22,7 +22,7 @@ local function copy(a)
 
     local meta = getmetatable(a)        local b = setmetatable( {}, meta )
 
-    for k,v in pairs(coords) do b[v] = a[v] end         return b
+    for i,v in ipairs(spaceAxes) do b[v] = a[v] end         return b
 
 end
 
@@ -30,7 +30,7 @@ local function unit(a)
     
     local norm = norm(a)
 
-	for i,v in ipairs(coords) do
+	for i,v in ipairs(spaceAxes) do
         
         local k = v         v = a[v]
         
@@ -44,7 +44,7 @@ end
 
 local function isZero(a)
 
-    for i,v in ipairs(coords) do 
+    for i,v in ipairs(spaceAxes) do 
         
         if a[v] ~= 0 then return false end 
     
@@ -70,6 +70,8 @@ end
 
 
 return {
+
+    planeAxes = planeAxes,          spaceAxes = spaceAxes,
 
     normSqr = normSqr,              norm = norm,
     unit = unit,                    isZero = isZero,

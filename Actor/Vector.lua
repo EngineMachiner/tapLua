@@ -5,6 +5,8 @@ local astro = Astro.Type
 
 local isFunction = astro.isFunction
 
+astro = Astro.Table
+
 
 local Vector = Astro.Vector -- Default builder => Simple operations.
 
@@ -22,7 +24,9 @@ local function get( input, ... )
 
     local Vector = builder(input)       local a, b, c = ...
 
-    return Vector and Vector( a, b, c ) or a, b, c
+    if not Vector then return a, b, c end
+
+    return Vector( a, b, c )
 
 end
 
@@ -99,11 +103,11 @@ end
 
 local function setPos( self, vector )
     
-    local x, y, z = vector:unpack()         self:xy( x, y ):z(z)
-
-    return self
+    self:xyz( vector:unpack() )             return self
 
 end
+
+local function setEffectMagnitude( self, vector ) return self:effectmagnitude( vector:unpack() ) end
 
 local t = {
     
@@ -120,10 +124,31 @@ local t = {
 
     setRotation = setRotation,          setSizeVector = setSizeVector,
 
-    setZoomVector = setZoomVector,          setPos = setPos
+    setZoomVector = setZoomVector,          setPos = setPos,        setEffectMagnitude = setEffectMagnitude
 
 }
 
 tapLua.Actor.Vector = t -- Will be removed in Actor.lua
 
-local actor = tapLua.Actor          Astro.Table.merge( actor, t )
+astro.merge( tapLua.Actor, t )
+
+
+-- Sprite
+
+local function scrollTexture( self, vector )
+
+    vector = - vector           self:texcoordvelocity( vector:unpack() )
+    
+    return self
+
+end
+
+local function moveTextureBy( self, vector )
+
+    self:addimagecoords( vector:unpack() )          return self
+
+end
+
+local t = { scrollTexture = scrollTexture,      moveTextureBy = moveTextureBy }
+
+astro.merge( tapLua.Sprite, t )

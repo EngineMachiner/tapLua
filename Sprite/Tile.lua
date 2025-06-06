@@ -1,56 +1,56 @@
 
-local input = ...         local path = input.Path          local zoom = input.Zoom
-
-local Sprite = input.Sprite
+local Vector = Astro.Vector             local offsets = Astro.Layout.centerOffsets
 
 
-local Vector = Astro.Vector
+local input = ...          local zoom = input.Zoom          local Sprite = input.Sprite
 
-local renderer = tapLua.Sprite.Renderer
+local Texture = input.Texture                   local onPreload = input.onPreload
 
-renderer:Load(path):zoom(zoom)
 
-local rows, columns = renderer:screenMatrix()
+local Renderer = tapLua.Sprite.Renderer         Renderer:LoadBy(Texture):zoom(zoom)
+
+if onPreload then onPreload() end               zoom = Renderer:GetZoom()
+
+
+local matrix = Renderer:screenMatrix()          local offset = input.MatrixOffset or Vector()
+
+if offset then matrix = matrix + offset end
+
+
+local columns, rows = matrix:unpack()           offsets = offsets(matrix)
 
 
 local t = tapLua.ActorFrame {
     
-    InitCommand=function(self) self:zoom(zoom):queuecommand("PostInit") end 
+    InitCommand=function(self)
+
+        self.Matrix = matrix            local size = Renderer:GetZoomedSize()
+        
+        self:setsize( size.x * columns, size.y * rows )         self:zoom(zoom):playcommand("PostInit")
+    
+    end
 
 }
 
-local function ceil(a) return math.ceil( a * 0.5 ) end
-
 local function add( i, j )
 
-    t[#t+1] = tapLua.Sprite {
+    local k = #t + 1
 
-        Texture = path,
+    t[k] = tapLua.Sprite {
+
+        Texture = Texture,
+
+        InitCommand=function(self) self.Index = k end,
 
         PostInitCommand=function(self)
 
-            self.Row, self.Column = i, j
+            local tilePos = Vector( i, j )                  self.TilePos = tilePos
+
+            local w, h = self:GetSize(true)                 local half, even = offsets.half, offsets.even
             
-
-            local w, h = self:GetSize(true)
-
-            local offset = Vector( rows + 1, columns + 1 ) % 2
+            local offset = tilePos - half - even            local x, y = offset:unpack()
             
-            offset = offset * 0.5
-
-            local i = i - ceil(rows) - offset.x
-            local j = j - ceil(columns) - offset.y
-
-            local pos = Vector( w * j, h * i )
-
-            self:setPos(pos)
-
-
-            local p = self:GetParent()
-            
-            local size = p:GetSize() + self:GetSize()
-
-            p:setSizeVector(size)
+            local pos = Vector( w * x, h * y )              self:setPos(pos)
             
         end
 
@@ -58,6 +58,6 @@ local function add( i, j )
 
 end
 
-for i = 1, rows do for j = 1, columns do add( i, j ) end end
+for j = 1, rows do for i = 1, columns do add( i, j ) end end
 
 return t

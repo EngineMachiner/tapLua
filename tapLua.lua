@@ -48,17 +48,9 @@ LoadModule( subPath .. "Actor/Actor.lua" )
 
 local Vector = Astro.Vector
 
-local function screenSize()
-    
-    return Vector( SCREEN_WIDTH, SCREEN_HEIGHT ) 
+local function screenSize() return Vector( SCREEN_WIDTH, SCREEN_HEIGHT ) end
 
-end
-
-local function center()
-    
-    return Vector( SCREEN_CENTER_X, SCREEN_CENTER_Y )
-
-end
+local function center() return Vector( SCREEN_CENTER_X, SCREEN_CENTER_Y ) end
 
 local function resolvePath( path, stackLevel )
 
@@ -70,6 +62,42 @@ local function resolvePath( path, stackLevel )
 
 end
 
-local t = { screenSize = screenSize,    center = center,    resolvePath = resolvePath }
+local function spriteMatrix(path)
+
+    local x, y = path:match("(%d+)x(%d+)")      local isValid = x and y
+
+    if not isValid then return end
+
+    return Vector( x, y )
+
+end
+
+
+local function verticalFOV(FOV)
+    
+    local aspectRatio = SCREEN_WIDTH / SCREEN_HEIGHT
+
+    FOV = math.rad(FOV) / 2               FOV = math.tan(FOV) / aspectRatio
+
+    FOV = 2 * math.atan(FOV)              return math.deg(FOV)
+
+end
+
+local function depthOffset( x, z, FOV )
+
+    local direction = x == 0 and 0 or x / math.abs(x)
+    
+    local rad = math.rad( FOV / 2 )             return x - z * direction * math.tan(rad)
+
+end
+
+
+local t = { 
+    
+    screenSize = screenSize,    center = center,    resolvePath = resolvePath,
+
+    spriteMatrix = spriteMatrix,            verticalFOV = verticalFOV,          depthOffset = depthOffset
+
+}
 
 Astro.Table.merge( tapLua, t )

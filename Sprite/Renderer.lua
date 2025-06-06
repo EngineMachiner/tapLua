@@ -1,15 +1,15 @@
 
 -- Returns the rows and columns of sprites to cover the screen.
 
+local Vector = Astro.Vector                 local planeAxes = Vector.planeAxes
+
+local quantityIn = Astro.Layout.quantityIn
+
 local function screenMatrix(self)
 
-    local scale = SCREEN_HEIGHT / 720           local size = self:GetZoomedSize() * scale
+    local scale = SCREEN_HEIGHT / 720               local size = self:GetZoomedSize() * scale
 
-    local rows = SCREEN_HEIGHT / size.y         local columns = SCREEN_WIDTH / size.x
-
-    rows = math.ceil(rows)          columns = math.ceil(columns)
-
-    return rows, columns
+    local screenSize = tapLua.screenSize()          return quantityIn( screenSize, size )
 
 end
 
