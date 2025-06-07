@@ -66,7 +66,7 @@ local function spriteMatrix(path)
 
     local x, y = path:match("(%d+)x(%d+)")      local isValid = x and y
 
-    if not isValid then return end
+    if not isValid then return end          x = tonumber(x)         y = tonumber(y)
 
     return Vector( x, y )
 

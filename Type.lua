@@ -7,6 +7,8 @@ local isUserData = astro.isUserData         local isTable = astro.isTable
 
 -- Only classes from the "Def" table have the "Class" variable.
 
+-- A RageTexture is userdata.
+
 local function isObject(a)
     
     local name = tostring(a)        local isObject = isTable(a) and not name:match("table")
