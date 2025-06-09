@@ -1,8 +1,6 @@
 
-local astro = Astro.Type
+local astro = Astro.Type        local isTable = astro.isTable       local isNil = astro.isNil
 
-local isTable = astro.isTable
-local isNil = astro.isNil
 
 -- Return the table as read-only.
 

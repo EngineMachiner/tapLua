@@ -23,7 +23,7 @@ path = isLegacy() and "Modules/tapLua/" or path
 tapLua.Path = path
 
 
-local astroPath = path .. "Astro/"            require(astroPath)(astroPath)
+local p = path .. "Astro/"            require(p)(p)
 
 dofile( path .. "Legacy.lua" )
 
@@ -38,7 +38,7 @@ LoadModule( subPath .. "FileManager.lua" )
 -- Exclude tapLua.lua because it would loop forever.
 -- Exclude scripts already loaded.
 
-local blacklist = { "FileManager.lua", "Legacy.lua", "tapLua.lua" }
+local blacklist = { "FileManager.lua", "Legacy.lua" }
 
 tapLua.FILEMAN.LoadDirectory( path, blacklist )
 
@@ -52,6 +52,7 @@ local function screenSize() return Vector( SCREEN_WIDTH, SCREEN_HEIGHT ) end
 
 local function center() return Vector( SCREEN_CENTER_X, SCREEN_CENTER_Y ) end
 
+
 local function resolvePath( path, stackLevel )
 
     stackLevel = stackLevel or 2            if not path then return end
@@ -61,6 +62,7 @@ local function resolvePath( path, stackLevel )
     return "/" .. ResolveRelativePath( path, stackLevel )
 
 end
+
 
 local function spriteMatrix(path)
 

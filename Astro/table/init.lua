@@ -1,20 +1,14 @@
 
 -- All isValid functions are basically compare functions.
 
-local path = Astro.Path .. "table/"
-
-
 local astro = Astro.Type
 
-local isFunction = astro.isFunction
-local isNumber = astro.isNumber
+local isFunction = astro.isFunction         local isNumber = astro.isNumber
 local isTable = astro.isTable
-local isNil = astro.isNil
 
 
-local internal = require( path .. "internal" )
+local path = Astro.Path .. "table/"         local internal = require( path .. "internal" )
 
-local action = internal.action
 local meta = internal.meta
 
 
@@ -46,9 +40,7 @@ end
 
 local function keys(tbl)
     
-    local t = {}
-    
-    for k,v in pairs(tbl) do table.insert( t, k ) end
+    local t = {}        for k,v in pairs(tbl) do table.insert( t, k ) end
 
     return meta( t, tbl )
 
@@ -56,7 +48,7 @@ end
 
 local function values(tbl)
     
-    local t = {}       for k,v in pairs(tbl) do table.insert( t, v ) end
+    local t = {}        for k,v in pairs(tbl) do table.insert( t, v ) end
 
     return meta( t, tbl )
 
@@ -101,35 +93,19 @@ local function contains( tbl, x )
 
 end
 
---[[
-
-    Returns filtered values using a function with the key as argument.
-
-    It can return an ordered array values setting __orderArray to true 
-    in the table and then calling the function. When the function is run
-    it will remove the value.
-
-]]
+-- Returns filtered values using a function with the key as argument.
 
 local function filter( tbl, x )
 
-    local orderArray = action( tbl, "__orderArray" )
-    
     local isValid = isValid( tbl, x )           local t = {}
 
     local function add(k)
 
-        if not isValid(k) then return end           local v = tbl[k]
-
-        if orderArray and isNumber(k) then table.insert(t, v) return end
-        
-        t[k] = v
+        if not isValid(k) then return end       local v = tbl[k]        t[k] = v
 
     end
 
-    for k,v in pairs(tbl) do add(k) end
-
-    return meta( t, tbl )
+    for k,v in pairs(tbl) do add(k) end         return meta( t, tbl )
 
 end
 
@@ -148,9 +124,7 @@ local function sub( a, b )
 
         for k,v in pairs(b) do
             
-            local isValid = key == k and val == v
-
-            if isValid then return false end
+            local isValid = key == k and val == v           if isValid then return false end
         
         end
     
@@ -176,14 +150,14 @@ end
 
 local function isEmpty(t)
   
-    local next = next(t)      return isNil(next)
+    local next = next(t)      return next == nil
     
 end
 
 
 local mergeLibs = require( Astro.Path .. "mergeLibs" )
 
-local tbl = {
+astro = {
     
     deepMerge = deepMerge,
 
@@ -199,24 +173,22 @@ local tbl = {
 
 }
 
-Astro.Table = tbl -- Store temporarily first.
+Astro.Table = astro -- Store temporarily first.
 
+-----------------------------------------------------------------------------------------------------------------
 
--- We're removing the internal table later.
-
-Astro.Table.Internal = internal
+astro.Internal = internal
 
 local paths = { Array = "array",    Copy = "copy",      Meta = "meta" }
 
 local function name(key) return paths[key] or key end
 
+
 local keys = { "Array", "Copy", "Meta", "intersect", "readOnly", "create" }
 
-for i,v in ipairs(keys) do tbl[v] = require( path .. name(v) ) end
-
-tbl.concat = loadfile( path .. "concat.lua" )
-
-Astro.Table.Internal = nil
+for i,v in ipairs(keys) do astro[v] = require( path .. name(v) ) end
 
 
-return tbl
+astro.concat = loadfile( path .. "concat.lua" )             astro.Internal = nil
+
+return astro

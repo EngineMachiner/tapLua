@@ -1,7 +1,5 @@
 
-local isLegacy = tapLua.isLegacy()
-
-if not isLegacy then return end
+local isLegacy = tapLua.isLegacy()          if not isLegacy then return end
 
 
 -- Load scripts in legacy.

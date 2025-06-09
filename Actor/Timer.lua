@@ -25,11 +25,9 @@ end
 
 local function timer( self, time, callback )
 
-    local timers = self.tapLua.Timers
+    local timers = self.tapLua.Timers           local timer = { Time = 0, Limit = time, callback = callback }
 
-    local timer = { Time = 0, Limit = time, callback = callback }
-
-    table.insert( timers, timer )             return timer
+    table.insert( timers, timer )               return timer
 
 end
 

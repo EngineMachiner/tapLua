@@ -7,10 +7,8 @@
 ]]
 
 
-local astro = Astro.Type
+local astro = Astro.Type        local isString = astro.isString         local isNumber = astro.isNumber
 
-local isString = astro.isString
-local isNumber = astro.isNumber
 local isFunction = astro.isFunction
 
 return function( input, lib )
@@ -24,9 +22,7 @@ return function( input, lib )
 
         local isValid = isValid1 or isValid2            if not isValid then return end
         
-        if isValid1 then k = v      v = lib[v] end
-        
-        t[k] = v
+        if isValid1 then k = v      v = lib[v] end          t[k] = v
 
     end
 

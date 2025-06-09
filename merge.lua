@@ -10,9 +10,9 @@ local isVector = Astro.Vector.isVector
 
 local function isObject(a)
     
-    local meta = getmetatable(a)
+    local meta = getmetatable(a)        local k = "__concat"
 
-    return meta and meta.__concat == DefMetatable.__concat
+    return meta and meta[k] == DefMetatable[k]
 
 end
 

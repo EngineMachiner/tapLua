@@ -19,9 +19,7 @@ local function sub( a, b )
 
     local function isValid(key)
     
-        local val = a[key]          
-
-        for k,v in pairs(b) do  if val == v then return false end   end
+        local val = a[key]          for k,v in pairs(b) do if val == v then return false end end
     
         return true
 
@@ -33,9 +31,7 @@ end
 
 local function reverse(t)
 
-    local output = {}
-
-    for i = #t, 1, -1 do table.insert( output, t[i] ) end
+    local output = {}           for i = #t, 1, -1 do table.insert( output, t[i] ) end
 
     return meta( output, t )
 
@@ -47,11 +43,11 @@ end
 
 local function distinct( array, recursive )
 
-    local seen, output = {}, {}
+    local processed, output = {}, {}
 
     local function add(v)
 
-        if seen[v] then return end          seen[v] = true
+        if processed[v] then return end          processed[v] = true
         
         if isTable(v) and recursive then v = distinct( v, true ) end
 

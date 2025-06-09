@@ -1,8 +1,5 @@
 
-local astro = Astro.Type
-
-local isNil = astro.isNil
-local isString = astro.isString
+local astro = Astro.Type            local isString = astro.isString
 
 astro = Astro.Table
 
@@ -31,8 +28,20 @@ local function matches( tbl, val )
 
 end
 
+local function currentPath()
+
+    local path = debug.getinfo( 3, "S" )       path = path.source
+
+    if path:sub( 1, 1 ) == "@" then path = path:sub(2) end
+
+    return path
+
+end
+
 
 local function LoadDirectory( directory, blacklist, recursive )
+
+    blacklist = blacklist or {}         table.insert( blacklist, currentPath() )
 
     if isString(directory) then directory = paths( directory ) end
 
@@ -52,12 +61,13 @@ local function LoadDirectory( directory, blacklist, recursive )
 
         local endsWith = path:Astro():endsWith("%.lua")
 
-        if endsWith then dofile(path) return end
+        if endsWith then print(path) dofile(path) return end
         
 
         local isValid = not recursive or not isDirectory(path)
 
         if isValid then return end
+        
 
         LoadDirectory( path, blacklist, recursive )
 
@@ -101,7 +111,7 @@ local function getFiles( directory, patterns, recursive )
 
     end
 
-    for i,v in ipairs( directory ) do
+    for i,v in ipairs(directory) do
 
         if isDirectory(v) then onDirectory(v) else add(v) end
 
@@ -112,8 +122,4 @@ local function getFiles( directory, patterns, recursive )
 
 end
 
-tapLua.FILEMAN = {
-
-    LoadDirectory = LoadDirectory,      getFiles = getFiles
-
-}
+tapLua.FILEMAN = { LoadDirectory = LoadDirectory,      getFiles = getFiles }

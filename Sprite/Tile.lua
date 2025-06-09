@@ -1,5 +1,5 @@
 
-local Vector = Astro.Vector             local offsets = Astro.Layout.centerOffsets
+local Vector = Astro.Vector             local centerOffset = Astro.Layout.centerOffset
 
 
 local input = ...          local zoom = input.Zoom          local Sprite = input.Sprite
@@ -17,7 +17,7 @@ local matrix = Renderer:screenMatrix()          local offset = input.MatrixOffse
 if offset then matrix = matrix + offset end
 
 
-local columns, rows = matrix:unpack()           offsets = offsets(matrix)
+local columns, rows = matrix:unpack()           centerOffset = centerOffset(matrix)
 
 
 local t = tapLua.ActorFrame {
@@ -27,7 +27,7 @@ local t = tapLua.ActorFrame {
         self.Matrix = matrix            local size = Renderer:GetZoomedSize()
         
         self:setsize( size.x * columns, size.y * rows )         self:zoom(zoom):playcommand("PostInit")
-    
+
     end
 
 }
@@ -46,11 +46,11 @@ local function add( i, j )
 
             local tilePos = Vector( i, j )                  self.TilePos = tilePos
 
-            local w, h = self:GetSize(true)                 local half, even = offsets.half, offsets.even
+            local w, h = self:GetSize(true)                 local offset = tilePos - centerOffset
             
-            local offset = tilePos - half - even            local x, y = offset:unpack()
+            local x, y = offset:unpack()                    local pos = Vector( w * x, h * y )
             
-            local pos = Vector( w * x, h * y )              self:setPos(pos)
+            self:setPos(pos)
             
         end
 

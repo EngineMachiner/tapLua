@@ -1,7 +1,5 @@
 
-local isTable = Astro.Type.isTable
-
-local meta = Astro.Table.Internal.meta
+local isTable = Astro.Type.isTable              local meta = Astro.Table.Internal.meta
 
 local function shallow(tbl)
 

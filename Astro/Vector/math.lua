@@ -60,7 +60,7 @@ local function unpack(a) return a.x, a.y, a.z end
 
 local function angle(a)
 
-	local vector = copy(a)      vector = unit(vector)
+	local vector = copy(a)          vector = unit(vector)
     
     local x, y = unpack(vector)         local angle = math.atan( y / x )
     
@@ -73,9 +73,7 @@ return {
 
     planeAxes = planeAxes,          spaceAxes = spaceAxes,
 
-    normSqr = normSqr,              norm = norm,
-    unit = unit,                    isZero = isZero,
-    angle = angle,                  unpack = unpack,
-    copy = copy
+    normSqr = normSqr,          norm = norm,            unit = unit,            isZero = isZero,
+    angle = angle,              unpack = unpack,        copy = copy
 
 }

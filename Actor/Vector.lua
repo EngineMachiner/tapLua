@@ -1,9 +1,7 @@
 
 -- Actor functions to return variable arguments or vector objects.
 
-local astro = Astro.Type
-
-local isFunction = astro.isFunction
+local astro = Astro.Type            local isFunction = astro.isFunction
 
 astro = Astro.Table
 
@@ -137,9 +135,7 @@ astro.merge( tapLua.Actor, t )
 
 local function scrollTexture( self, vector )
 
-    vector = - vector           self:texcoordvelocity( vector:unpack() )
-    
-    return self
+    vector = - vector       self:texcoordvelocity( vector:unpack() )        return self
 
 end
 

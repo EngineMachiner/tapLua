@@ -1,5 +1,5 @@
 
-local Vector = Astro.Vector
+local Vector = Astro.Vector         local unit = Vector.unit
 
 local directions = {
 
@@ -11,7 +11,7 @@ local directions = {
 
 }
 
-for k,v in pairs(directions) do directions[k] = Vector.unit(v) end
+for k,v in pairs(directions) do directions[k] = unit(v) end
 
 
 -- Wrap the Vector constructor.

@@ -1,25 +1,23 @@
 
-local astro = Astro.Type            local isString = astro.isString
+local astro = Astro.Type
 
-local isFunction = astro.isFunction             astro = Astro.Table
+local isString = astro.isString             local isFunction = astro.isFunction
 
-local isTexture = tapLua.Type.isTexture
+local isTexture = tapLua.Type.isTexture             astro = Astro.Table
 
 
 local Actor = {}                tapLua.Actor = Actor
 local Sprite = {}               tapLua.Sprite = Sprite
 local ActorFrame = {}           tapLua.ActorFrame = ActorFrame
 
-
 local function resolvePath(path) return tapLua.resolvePath( path, 3 ) end
 
-
-local path = tapLua.Path .. "Actor/"
-
-tapLua.FILEMAN.LoadDirectory( path, "Actor.lua" )
+tapLua.FILEMAN.LoadDirectory( tapLua.Path .. "Actor/" )
 
 
 local Vector = Actor.Vector        Actor.Vector = nil
+
+local metaActor = astro.Copy.deep(Actor)
 
 
 local function setMeta( f, tbl )
@@ -86,9 +84,7 @@ local function actor( tapLua, input )
 
         InitCommand=function(self)
 
-            for k,v in pairs( tapLua ) do self[k] = v end             self.tapLua = { Timers = {} }
-            
-            self.extend, self.merge, self.commands = nil -- It's not logical.
+            for k,v in pairs( metaActor ) do self[k] = v end             self.tapLua = { Timers = {} }
 
         end
 
@@ -105,8 +101,6 @@ local function texture(texture) return isString(texture) and resolvePath(texture
 
 local function sprite( tapLua, input )
 
-    input.Class = "Sprite"
-    
     local Texture = input.Texture           input.Texture = texture(Texture)
 
     local base = {
@@ -121,7 +115,7 @@ local function sprite( tapLua, input )
     
     }
 
-    input = merge( base, input )        return Actor(input)
+    input.Class = "Sprite"      input = merge( base, input )        return Actor(input)
 
 end
 
@@ -130,11 +124,9 @@ setMeta( sprite, Sprite )
 
 local function actorFrame( tapLua, input )
     
-    input.Class = "ActorFrame"
-    
     local base = { InitCommand=function(self) for k,v in pairs( tapLua ) do self[k] = v end end }
     
-    input = merge( base, input )        return Actor(input)
+    input.Class = "ActorFrame"      input = merge( base, input )        return Actor(input)
 
 end
 
@@ -147,7 +139,7 @@ local function ActorFrameTexture( input ) input.Class = "ActorFrameTexture"     
 
 local function Text( input )
     
-    input.Class = "BitmapText"          input.Font = resolvePath( input.Font )          return Actor(input) 
+    input.Class = "BitmapText"      input.Font = resolvePath( input.Font )      return Actor(input) 
 
 end
 
@@ -168,9 +160,7 @@ local function model( input )
 
     for i,v in ipairs( modelKeys ) do input[v] = resolvePath( input[v] ) end
 
-    input.Class = "Model"        input.setupFile = setupFile
-    
-    return Actor(input)
+    input.Class = "Model"        input.setupFile = setupFile        return Actor(input)
 
 end
 

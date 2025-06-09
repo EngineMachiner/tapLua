@@ -7,30 +7,29 @@
 
 ]]
 
-local astro = Astro.Type
+------------------------------------------------------------------------------------------------------------------------
 
-local isNumber = astro.isNumber
-local isString = astro.isString
-local isTable = astro.isTable
-local isNil = astro.isNil
+local astro = Astro.Type                    local isVector = Astro.Vector.isVector
 
-astro = Astro.Table
-
-local table = astro.table {
-    
-    "insert", "pack", "concat",         isEmpty = astro.isEmpty
-
-}
+local isNumber = astro.isNumber             local isString = astro.isString
+local isTable = astro.isTable               local isNil = astro.isNil
 
 ------------------------------------------------------------------------------------------------------------------------
 
 astro = Astro.Config.Concat
 
-local showID = astro.showID
-local showIndex = astro.showIndex
-local wideMode = astro.wideMode
-local indentation = astro.indentation
+local showID = astro.showID                         local showIndex = astro.showIndex
+local wideMode = astro.wideMode                     local indentation = astro.indentation
 local keyQuotes = astro.keyQuotes
+
+------------------------------------------------------------------------------------------------------------------------
+
+astro = Astro.Table
+
+local table = astro.table { "insert", "pack", "concat",         isEmpty = astro.isEmpty }
+
+------------------------------------------------------------------------------------------------------------------------
+
 
 local function concat(...) local s = {...}      return table.concat(s) end
 
@@ -66,9 +65,8 @@ end
 
 local sequences = {
 
-    ['\a'] = '\\a',     ['\b'] = '\\b',     ['\f'] = '\\f',
-    ['\n'] = '\\n',     ['\r'] = '\\r',     ['\t'] = '\\t',
-    ['\v'] = '\\v'
+    ['\a'] = '\\a',     ['\b'] = '\\b',     ['\f'] = '\\f',     ['\n'] = '\\n',
+    ['\r'] = '\\r',     ['\t'] = '\\t',     ['\v'] = '\\v'
 
 }
 
@@ -82,13 +80,9 @@ end
 
 local function format(a)
 
-    local s = tostring(a)       s = escape(s)
+    local s = tostring(a)       s = escape(s)       if isString(a) then return quotes(s) end
 
-    if isString(a) then return quotes(s) end
-
-    -- Remove the table address.
-    
-    if not showID and isTable(a) then return '' end
+    if not showID and isTable(a) then return '' end -- Remove the table address.
 
     return s
 
@@ -108,7 +102,7 @@ end
 
 local function copy(tbl)
 
-    local copy = Astro.Table.Copy.shallow(tbl)
+    local copy = astro.Copy.shallow(tbl)
 
     -- Parse indexed nil values to strings. This is why there's a copy.
 
@@ -141,15 +135,9 @@ local function pack(tbl)
     local t = {} -- Table containing all the strings.
 
 
-    -- Track tables we've already processed to avoid infinite recursion.
-
-    local processed = {}
+    local processed = {} -- Track tables we've already processed to avoid infinite recursion.
     
-    local function wasProcessed(tbl)
-    
-        local id = tostring(tbl)      return processed[id]
-      
-    end
+    local function wasProcessed(tbl) return processed[tbl] end
     
 
     local function isGap(a, b) 
@@ -179,6 +167,8 @@ local function pack(tbl)
 
     local function addValue( v, indent )
     
+        if isVector(v) then add( tostring(v) ) return end
+
         if isTable(v) then recursivePack( v, indent ) return end
 
         local name = format(v)        add(name)
@@ -190,18 +180,14 @@ local function pack(tbl)
         indent = indent or 0
 
 
-        local copy = copy(tbl)          local name = name(copy)
+        local copy = copy(tbl)          local name = name(tbl)
         
         local isEmpty = table.isEmpty(copy)         local isFormer = tbl == former
         
         
-        local id = tostring(tbl)        local cycleName = cycleName(name)
-        
-        cycleName = concat( "<cycle>", cycleName )
+        local cycleName = cycleName(name)           cycleName = concat( "<cycle>", cycleName )
 
-        if processed[id] then add(cycleName) return end
-        
-        processed[id] = true
+        if processed[tbl] then add(cycleName) return end            processed[tbl] = true
         
 
         local curly = concat( name, '{' )
@@ -212,7 +198,6 @@ local function pack(tbl)
         local firstKey, lastKey
 
         for k,v in pairs(copy) do
-
 
             local a, b = next( copy, k )        
             
@@ -256,15 +241,11 @@ end
 
 local function wrap(...)
 
-    if not table.pack then return {...} end
-
-    local tbl = table.pack(...)     tbl.n = nil
+    if not table.pack then return {...} end             local tbl = table.pack(...)     tbl.n = nil
 
     return tbl
     
 end
 
 
-local tbl = wrap(...)       tbl = pack(tbl)
-
-return table.concat(tbl)
+local tbl = wrap(...)       tbl = pack(tbl)         return table.concat(tbl)

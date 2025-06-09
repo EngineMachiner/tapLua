@@ -1,8 +1,5 @@
 
-local astro = Astro.Type
-
-local isNumber = astro.isNumber
-local isTable = astro.isTable
+local astro = Astro.Type        local isNumber = astro.isNumber         local isTable = astro.isTable
 
 astro = Astro.Table
 

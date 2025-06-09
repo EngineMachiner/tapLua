@@ -13,13 +13,14 @@ return function( a, b, distinct )
 
         if t[k] or isDistinct then return end
         
+
         local key, val = k, v
 
-        for k,v in pairs(b) do    if val == v then return true end    end
+        for k,v in pairs(b) do if val == v then return true end end
     
     end
 
-    for k,v in pairs(a) do    if isValid(k, v) then t[k] = v end     end
+    for k,v in pairs(a) do if isValid(k, v) then t[k] = v end end
 
     return meta( t, a )
 

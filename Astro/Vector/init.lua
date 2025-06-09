@@ -1,24 +1,22 @@
 
-local path = Astro.Path .. "Vector/"
-
-
-local astro = Astro.Type
-
-local isTable = astro.isTable
-
-local isNumber = astro.isNumber
+local astro = Astro.Type        local isTable = astro.isTable        local isNumber = astro.isNumber
 
 astro = Astro.Table
 
 
-local vector = require( path .. "math" )
+local path = Astro.Path .. "Vector/"            local vector = require( path .. "math" )
 
-local spaceAxes = vector.spaceAxes          local copy = vector.copy
+local spaceAxes = vector.spaceAxes              local copy = vector.copy
+
+
+local metaVector = astro.Copy.deep(vector)
+
+local mergeLibs = require( Astro.Path .. "mergeLibs" )
 
 
 local function hasCoordinate(a)
 
-    for i,v in ipairs(spaceAxes) do   if a[v] then return true end   end
+    for i,v in ipairs(spaceAxes) do if a[v] then return true end end
 
     return false
 
@@ -115,9 +113,14 @@ local Meta = {
 }
 
 
-local functions = astro.Copy.shallow(vector)
+local function isVector(a)
 
-local mergeLibs = require( Astro.Path .. "mergeLibs" )
+    if not isTable(a) then return false end             local meta = getmetatable(a)
+    
+    if not meta then return false end           return meta.__tostring == __tostring
+
+end
+
 
 local defaults = { "unpack", "copy" }
 
@@ -127,7 +130,7 @@ local function builder( __index )
 
     __index = __index or {}             astro.Array.add( __index, defaults )
     
-    __index = mergeLibs( __index, functions )
+    __index = mergeLibs( __index, metaVector )
     
 
     -- Set the vector position defaults.
@@ -139,12 +142,11 @@ local function builder( __index )
     
         -- If it's a vector then return a copy!
 
-        if Vector.isVector(...) then return Vector.copy(...) end
+        if isVector(...) then return Vector.copy(...) end
 
 
         local vector = {...}
         
-
         local isSingle = #vector == 1 and isTable( vector[1] )
         
         if isSingle then vector = vector[1] end
@@ -160,21 +162,8 @@ local function builder( __index )
 
 end
 
-
-local function isVector(a)
-
-    if not isTable(a) then return false end
-
-    local meta = getmetatable(a)        if not meta then return false end
-
-    return meta.__tostring == __tostring
-
-end
-
+-- Finish merging and set vector constructor.
 
 local t = { isVector = isVector, builder = builder }        astro.merge( vector, t )
 
-
-local meta = { __call = builder() } -- Astro.Vector constructor.
-
-return setmetatable( vector, meta )
+local meta = { __call = builder() }         return setmetatable( vector, meta )
