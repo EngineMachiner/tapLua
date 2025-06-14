@@ -60,9 +60,11 @@ local function unpack(a) return a.x, a.y, a.z end
 
 local function angle(a)
 
-	local vector = copy(a)                  vector = unit(vector)
+    if a.y == 0 then return 0 end
+
+    local vector = copy(a)                  vector = unit(vector)
     
-    local x, y = unpack(vector)             local angle = x ~= 0 and math.atan( y / x ) or 0
+    local x, y = unpack(vector)             local angle = math.atan( y / x )
     
     angle = math.deg(angle)                 return angle % 360
 
