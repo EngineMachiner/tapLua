@@ -18,7 +18,9 @@ end
 
 local function value( new, current )
     
-    if not isTable(new) or isObject(new) then return new end
+    local isNew = not isTable(new) or isObject(new)
+
+    if isNew or not isTable(current) then return new end
 
     if isVector(new) then return new:copy() end         current = current or {}
     

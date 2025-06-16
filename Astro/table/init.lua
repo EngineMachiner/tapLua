@@ -16,7 +16,9 @@ local function pair( k, v ) return { key = k, value = v } end
 
 local function value( new, current )
 
-    local isVector = Astro.Vector.isVector              if not isTable(new) then return new end
+    local isVector = Astro.Vector.isVector
+    
+    if not isTable(new) or not isTable(current) then return new end
 
     if isVector(new) then return new:copy() end         current = current or {}
     
