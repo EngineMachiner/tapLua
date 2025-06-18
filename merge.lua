@@ -32,6 +32,8 @@ end
 
 local function deepMerge( to, from )
 
+    if not from then return to end
+
     for k,v in pairs(from) do to[k] = value( v, to[k] ) end         return to
 
 end
