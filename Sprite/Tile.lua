@@ -36,11 +36,15 @@ local function add( i, j )
 
     local k = #t + 1
 
-    t[k] = tapLua.Sprite {
+    local tbl = {
 
         Texture = Texture,
 
-        InitCommand=function(self) self.Index = k end,
+        InitCommand=function(self)
+            
+            self.Index = k           self.TileParent = self:GetParent():GetParent()
+        
+        end,
 
         PostInitCommand=function(self)
 
@@ -54,7 +58,9 @@ local function add( i, j )
             
         end
 
-    } .. Sprite
+    }
+
+    t[k] = tapLua.ActorFrame { tapLua.Sprite(tbl) .. Sprite }
 
 end
 
