@@ -1,7 +1,9 @@
 
-local function setupDepth(self, FOV)
+local function setupDepth(self, fov)
     
-    self:Center():SetFOV(FOV):SetDrawByZPosition(true)         return self
+    local scale = SCREEN_HEIGHT / 720           fov = tapLua.scaleFOV( fov, scale )
+
+    self:Center():SetFOV(fov):SetDrawByZPosition(true)         return self
 
 end
 

@@ -75,30 +75,34 @@ local function spriteMatrix(path)
 end
 
 
-local function verticalFOV(FOV)
-    
-    local aspectRatio = SCREEN_WIDTH / SCREEN_HEIGHT
+local function scaleFOV( fov, scale )
 
-    FOV = math.rad(FOV) / 2               FOV = math.tan(FOV) / aspectRatio
+    fov = math.rad(fov) / 2             fov = math.tan(fov) * scale
 
-    FOV = 2 * math.atan(FOV)              return math.deg(FOV)
+    fov = 2 * math.atan(fov)            return math.deg(fov)
 
 end
 
-local function depthOffset( x, z, FOV )
+local function verticalFOV(fov)
+    
+    local aspectRatio = GetScreenAspectRatio()          return scaleFOV( fov, 1 / aspectRatio )
+
+end
+
+local function depthOffset( x, z, fov )
 
     local direction = x == 0 and 0 or x / math.abs(x)
     
-    local rad = math.rad( FOV / 2 )             return x - z * direction * math.tan(rad)
+    local rad = math.rad( fov / 2 )             return x - z * direction * math.tan(rad)
 
 end
 
 
 local t = { 
     
-    screenSize = screenSize,    center = center,    resolvePath = resolvePath,
+    screenSize = screenSize,    center = center,    resolvePath = resolvePath,          spriteMatrix = spriteMatrix,
 
-    spriteMatrix = spriteMatrix,            verticalFOV = verticalFOV,          depthOffset = depthOffset
+    scaleFOV = scaleFOV,            verticalFOV = verticalFOV,          depthOffset = depthOffset
 
 }
 

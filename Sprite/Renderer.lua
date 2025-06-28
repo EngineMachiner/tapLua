@@ -8,9 +8,9 @@ local quantityIn = Astro.Layout.quantityIn
 
 local function screenMatrix(self)
 
-    local scale = SCREEN_HEIGHT / 720               local size = self:GetZoomedSize() * scale
-
-    local screenSize = tapLua.screenSize()          return quantityIn( screenSize, size )
+    local size = self:GetZoomedSize()           local screenSize = tapLua.screenSize()
+    
+    return quantityIn( screenSize, size )
 
 end
 
