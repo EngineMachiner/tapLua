@@ -1,10 +1,20 @@
 
-local function setupDepth(self, fov)
-    
-    local scale = SCREEN_HEIGHT / 720           fov = tapLua.scaleFOV( fov, scale )
+local merge = Astro.Table.merge
 
-    self:Center():SetFOV(fov):SetDrawByZPosition(true)         return self
+local function setScaledFOV( self, fov )
+
+    local scale = SCREEN_HEIGHT / 720           fov = tapLua.scaleFOV( fov, scale )
+    
+    return self:fov(fov)
 
 end
 
-tapLua.ActorFrame.setupDepth = setupDepth
+local function setupDepth( self, fov )
+    
+    self:Center():SetDrawByZPosition(true):setScaledFOV(fov)             return self
+
+end
+
+local t = { setScaledFOV = setScaledFOV,        setupDepth = setupDepth }
+
+merge( tapLua.ActorFrame, t )
