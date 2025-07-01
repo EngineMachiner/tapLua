@@ -42,4 +42,4 @@ $CODE
 EOF
 
 
-echo "Done!"
+echo "Exiting..."
