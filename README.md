@@ -9,7 +9,17 @@ tapLua focuses to be compatible with newer game builds, so it may not be compati
 
 It is also used in some of my other StepMania 5 projects.
 
-## Usage
+## Installation
+
+### Bash
+
+tapLua can be installed using the next bash command in the game directory:
+```console
+curl -s https://raw.githubusercontent.com/EngineMachiner/tapLua/refs/heads/master/tapLua.sh | bash
+```
+---
+
+Or it can be installed manually:
 
 ### OutFox
 
