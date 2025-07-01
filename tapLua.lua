@@ -77,7 +77,7 @@ end
 
 local function scaleFOV( fov, scale )
 
-    fov = math.rad(fov) / 2             fov = math.tan(fov) * scale
+    scale = scale or SCREEN_HEIGHT / 720            fov = math.rad(fov) / 2             fov = math.tan(fov) * scale
 
     fov = 2 * math.atan(fov)            return math.deg(fov)
 
