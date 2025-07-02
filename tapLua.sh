@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-FALLBACK="Themes/_fallback";        MODULES="Modules";       SCRIPT="\"tapLua/tapLua.lua\""
+FALLBACK="Themes/_fallback";        MODULES="Modules";       SCRIPT="tapLua/tapLua.lua"
 
 
 # Check modules folder and assign code.
@@ -10,14 +10,13 @@ if [ -d "Appearance" ]; then
 
     FALLBACK="Appearance/$FALLBACK";        MODULES="$FALLBACK/$MODULES"
         
-    CODE="LoadModule($SCRIPT)"
+    CODE="LoadModule(\"$SCRIPT\")"
 
 else
 
-    CODE="
-package.path = package.path .. \";./?/init.lua\"
+    CODE="package.path = package.path .. \";./?/init.lua\"
 
-dofile($MODULES/$SCRIPT)"
+dofile(\"$MODULES/$SCRIPT\")"
 
 fi
 

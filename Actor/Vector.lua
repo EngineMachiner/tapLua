@@ -101,7 +101,7 @@ end
 
 local function setPos( self, vector )
     
-    self:xyz( vector:unpack() )             return self
+    local x, y, z = vector:unpack()         return self:xy( x, y ):z(z)
 
 end
 
