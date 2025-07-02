@@ -15,7 +15,8 @@ It is also used in some of my other StepMania 5 projects.
 
 tapLua can be installed using the next bash command in the game directory:
 ```console
-curl -s https://raw.githubusercontent.com/EngineMachiner/tapLua/refs/heads/master/tapLua.sh | bash
+curl -o tapLua.sh https://raw.githubusercontent.com/EngineMachiner/tapLua/refs/heads/master/tapLua.sh
+./tapLua.sh; rm tapLua.sh
 ```
 
 ---
