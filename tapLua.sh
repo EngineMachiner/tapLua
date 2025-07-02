@@ -14,13 +14,13 @@ if [ -d "Appearance" ]; then
 
 else
 
-    read -r -d '' CODE << EOF
+    CODE="
 
-    package.path = package.path .. \";./?/init.lua\"
+package.path = package.path .. \";./?/init.lua\"
 
-    dofile($MODULES/$SCRIPT)
+dofile($MODULES/$SCRIPT)
 
-EOF
+"
 
 fi
 
