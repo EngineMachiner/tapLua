@@ -15,12 +15,9 @@ if [ -d "Appearance" ]; then
 else
 
     CODE="
-
 package.path = package.path .. \";./?/init.lua\"
 
-dofile($MODULES/$SCRIPT)
-
-"
+dofile($MODULES/$SCRIPT)"
 
 fi
 
