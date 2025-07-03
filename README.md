@@ -23,6 +23,8 @@ curl -o tapLua.sh https://raw.githubusercontent.com/EngineMachiner/tapLua/refs/h
 
 Or it can be installed manually:
 
+Be aware that to successfully add the actors, it's important that you have a basic understanding of **scripting and theme structure**.
+
 ### OutFox
 
   1. Clone in fallback's Modules folder.
@@ -30,17 +32,22 @@ Or it can be installed manually:
 
 ### Legacy
 
-  1. Create a Modules folder in the game's root folder and clone the repository in it.
-  2. Create or load tapLua through a script.
-  3. Make sure the `package.path` for Lua modules includes the `./?/init.lua` path for that game version or else add it.
-  4. Load tapLua through `dofile("Modules/tapLua/tapLua.lua")`.
+  1. Clone the repository in `./Modules`.
+  2. Load tapLua through `dofile("Modules/tapLua/tapLua.lua")` and make sure the `package.path` for Lua modules includes the `./?/init.lua` path for that game version.
 
   Example:
   ```lua
-  -- Script in /Scripts/ to run once.
+  -- A script in fallback's Scripts folder to run once.
 
-  package.path = package.path .. ";./?/init.lua" -- Doesn't include the path.
+  package.path = package.path .. ";./?/init.lua"
 
   dofile("Modules/tapLua/tapLua.lua")
   ```
 
+---
+
+3. Add the renderer as a persistent actor:
+```lua
+-- fallbacks's ScreenSystemLayer aux.lua
+tapLua.Load("Sprite/Renderer")
+```
