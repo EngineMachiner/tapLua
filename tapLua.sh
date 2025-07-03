@@ -48,7 +48,6 @@ echo "Done."
 cat << EOF
 
 Add the renderer in ScreenSystemLayer aux as a persistent actor:
-
 tapLua.Load("Sprite/Renderer")
 
 EOF
