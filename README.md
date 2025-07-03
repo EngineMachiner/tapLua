@@ -11,13 +11,13 @@ It is also used in some of my other StepMania 5 projects.
 
 ## Installation
 
-### Bash
+### Linux
 
-tapLua can be installed using the next bash command in the game directory:
-```console
-curl -o tapLua.sh https://raw.githubusercontent.com/EngineMachiner/tapLua/refs/heads/master/tapLua.sh
-./tapLua.sh; rm tapLua.sh
-```
+  1. Run the next commands in the game directory:
+  ```console
+  curl -o tapLua.sh https://raw.githubusercontent.com/EngineMachiner/tapLua/refs/heads/master/tapLua.sh
+  ./tapLua.sh; rm tapLua.sh
+  ```
 
 ---
 
@@ -27,15 +27,13 @@ Be aware that to successfully add the actors, it's important that you have a bas
 
 ### OutFox
 
-  1. Clone in fallback's Modules folder.
-  2. Load it using `LoadModule("tapLua/tapLua.lua")` once. This could be done through a script that runs once.
+  1. Clone in fallback's modules folder.
+  2. Load it using `LoadModule("tapLua/tapLua.lua")` in a script that runs once in fallback's Script folder.
 
 ### Legacy
 
   1. Clone the repository in `./Modules`.
-  2. Load tapLua through `dofile("Modules/tapLua/tapLua.lua")` and make sure the `package.path` for Lua modules includes the `./?/init.lua` path for that game version.
-
-  Example:
+  2. Load tapLua using `dofile("Modules/tapLua/tapLua.lua")` in a script that runs once in fallback's Script folder and make sure the `package.path` for Lua modules includes the `./?/init.lua` path for that game version.
   ```lua
   -- A script in fallback's Scripts folder to run once.
 
@@ -46,8 +44,7 @@ Be aware that to successfully add the actors, it's important that you have a bas
 
 ---
 
-3. Add the renderer as a persistent actor:
-```lua
--- fallbacks's ScreenSystemLayer aux.lua
-tapLua.Load("Sprite/Renderer")
-```
+  3. Add the renderer as a persistent actor:
+  ```lua
+  tapLua.Load("Sprite/Renderer") -- fallbacks's ScreenSystemLayer aux.lua
+  ```
