@@ -1,47 +1,48 @@
 
-local astro = Astro.Type
+-- https://en.wikipedia.org/wiki/Prototype-based_programming
 
-local isString = astro.isString             local isFunction = astro.isFunction
+local astro = Astro.Type                local isFunction = astro.isFunction
 
-local isTexture = tapLua.Type.isTexture             astro = Astro.Table
+local isTexture = tapLua.Type.isTexture
 
 
-local Actor = {}                tapLua.Actor = Actor
-local Sprite = {}               tapLua.Sprite = Sprite
-local ActorFrame = {}           tapLua.ActorFrame = ActorFrame
+astro = Astro.Table                     local filter = astro.filter
 
-local function resolvePath(path) return tapLua.resolvePath( path, 3 ) end
+local copy = astro.Copy.deep
+
+
+local Actor = {}                        tapLua.Actor = Actor
+local Sprite = {}                       tapLua.Sprite = Sprite
+local ActorFrame = {}                   tapLua.ActorFrame = ActorFrame
 
 tapLua.FILEMAN.LoadDirectory( tapLua.Path .. "Actor/" )
 
 
-local Vector = Actor.Vector        Actor.Vector = nil
+local Meta = Actor.Meta                 local resolvePath = Meta.resolvePath
 
-local metaActor = astro.Copy.deep(Actor)
+local setMeta = Meta.setMeta            local InitCommand = Meta.InitCommand
+
+local texture = Meta.texture
 
 
-local function setMeta( f, tbl )
+local Vector = Actor.Vector             local metaActor = copy(Actor)
 
-    local meta = { __call = f }         setmetatable( tbl, meta )
-
-end
+metaActor.Vector, metaActor.Meta = nil
 
 
 local function lib(keys)
 
-    if not keys then return Vector end
+    if not keys then return Vector end -- Extend vector library by default.
 
     local function isValid( k, v ) return astro.contains( keys, k ) end
 
-    return astro.filter( Actor, isValid )
+    return filter( Vector, isValid )
 
 end
 
--- Extend vector library by default.
-
 Actor.extend = function( actor, keys )
 
-    local lib = lib(keys)       merge( actor, lib )       return actor
+    local lib = lib(keys)       astro.merge( actor, lib )       return actor
 
 end
 
@@ -50,12 +51,12 @@ end
 
 local function commands( key, value ) return key:Astro():endsWith("Command") end
 
-Actor.commands = function(tbl) return astro.filter( tbl, commands ) end
+Actor.commands = function(tbl) return filter( tbl, commands ) end
 
 
 -- Merge tables before Actor creation.
 
-local function value( key, value, current )
+local function value( current, value )
 
     if not current or not isFunction(value) then return value end
 
@@ -67,9 +68,7 @@ local function merge( to, from )
 
     if not from then return to end
 
-    for k,v in pairs(from) do to[k] = value( k, v, to[k] ) end
-
-    return to
+    for k,v in pairs(from) do to[k] = value( to[k], v ) end         return to
 
 end
 
@@ -78,44 +77,37 @@ Actor.merge = merge
 
 local function actor( tapLua, input )
 
+    local base = { InitCommand=function(self) InitCommand(metaActor)(self)      self.tapLua = { Timers = {} } end }
+
+    input = merge( base, input ) -- Merging is inverted to merge from last to first. This base is the first table.
+
+
     local class = input.Class           input.Class = nil
 
-    local base = {
-
-        InitCommand=function(self)
-
-            for k,v in pairs( metaActor ) do self[k] = v end             self.tapLua = { Timers = {} }
-
-        end
-
-    }
-
-    input = merge( base, input )            local Actor = Def[class]            return Actor(input)
+    local actor = Def[class]            return actor(input)
 
 end
 
 setMeta( actor, Actor )
 
 
-local function texture(texture) return isString(texture) and resolvePath(texture) or texture end
-
 local function sprite( tapLua, input )
 
-    local Texture = input.Texture           input.Texture = texture(Texture)
+    local texture = texture( input.Texture )
 
     local base = {
-        
+
+        Class = "Sprite",           Texture = texture,
+
         InitCommand=function(self)
             
-            for k,v in pairs( tapLua ) do self[k] = v end
-            
-            if isTexture(Texture) then self:SetTexture(Texture) end
+            InitCommand(tapLua)(self)           if isTexture(texture) then self:SetTexture(texture) end
         
         end
-    
+
     }
 
-    input.Class = "Sprite"      input = merge( base, input )        return Actor(input)
+    input = merge( base, input )            return Actor(input)
 
 end
 
@@ -124,18 +116,25 @@ setMeta( sprite, Sprite )
 
 local function actorFrame( tapLua, input )
     
-    local base = { InitCommand=function(self) for k,v in pairs( tapLua ) do self[k] = v end end }
-    
-    input.Class = "ActorFrame"      input = merge( base, input )        return Actor(input)
+    local base = { Class = "ActorFrame",        InitCommand = InitCommand(tapLua) }
+
+    input = merge( base, input )            return Actor(input)
 
 end
 
 setMeta( actorFrame, ActorFrame )
 
 
-local function Quad( input ) input.Class = "Quad"       return Actor(input) end
+local function ActorFrameTexture( input )
+    
+    local base = { Class = "ActorFrameTexture",        InitCommand = InitCommand(tapLua) }
 
-local function ActorFrameTexture( input ) input.Class = "ActorFrameTexture"       return Actor(input) end
+    input = merge( base, input )            return Actor(input)
+
+end
+
+
+local function Quad( input ) input.Class = "Quad"       return Actor(input) end
 
 local function Text( input )
     
@@ -144,15 +143,11 @@ local function Text( input )
 end
 
 
-local Model = {}        tapLua.Model = Model
-
-local modelKeys = { "Meshes", "Materials", "Bones" }
+local Model = {}        tapLua.Model = Model        local modelKeys = { "Meshes", "Materials", "Bones" }
 
 local function setupFile( tbl, path )
 
-    for i,v in ipairs( modelKeys ) do tbl[v] = resolvePath(path) end
-    
-    return tbl
+    for i,v in ipairs( modelKeys ) do tbl[v] = resolvePath(path) end        return tbl
 
 end
 
@@ -180,12 +175,10 @@ end
 
 local t = {
     
-    Quad = Quad,        ScreenQuad = ScreenQuad,
+    Quad = Quad,        ScreenQuad = ScreenQuad,        ActorFrame = ActorFrame,
     
-    ActorFrame = ActorFrame,        ActorFrameTexture = ActorFrameTexture,
-    
-    Text = Text,        Model = Model,                  extend = extend
+    ActorFrameTexture = ActorFrameTexture,          Text = Text,        Model = Model
 
 }
 
-merge( tapLua, t )
+astro.merge( tapLua, t )

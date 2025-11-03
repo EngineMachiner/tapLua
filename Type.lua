@@ -1,13 +1,13 @@
 
+-- This is hacky but ¯\_(ツ)_/¯
+
+-- Only classes from the "Def" table have the "Class" key.
+
+-- A RageTexture is userdata.
+
 local astro = Astro.Type
 
 local isUserData = astro.isUserData         local isTable = astro.isTable
-
--- This is hacky but ¯\_(ツ)_/¯
-
--- Only classes from the "Def" table have the "Class" variable.
-
--- A RageTexture is userdata.
 
 local function isObject(a)
     

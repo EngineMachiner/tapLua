@@ -3,8 +3,9 @@
 
 local astro = Astro.Type
 
-local isFunction = astro.isFunction         local isNumber = astro.isNumber
 local isTable = astro.isTable
+
+local isFunction = astro.isFunction         local isNumber = astro.isNumber
 
 
 local path = Astro.Path .. "table/"         local internal = require( path .. "internal" )
@@ -42,33 +43,25 @@ end
 
 local function keys(tbl)
     
-    local t = {}        for k,v in pairs(tbl) do table.insert( t, k ) end
-
-    return meta( t, tbl )
+    local t = {}        for k,v in pairs(tbl) do table.insert( t, k ) end          return meta( t, tbl )
 
 end
 
 local function values(tbl)
     
-    local t = {}        for k,v in pairs(tbl) do table.insert( t, v ) end
-
-    return meta( t, tbl )
+    local t = {}        for k,v in pairs(tbl) do table.insert( t, v ) end          return meta( t, tbl )
 
 end
 
 local function random(tbl)
     
-    local values = values(tbl)          local i = math.random( #values )
-
-    return values[i]
+    local values = values(tbl)          local i = math.random( #values )            return values[i]
 
 end
 
 local function isValid( tbl, x )
 
-    local default = function( k, v ) return v == x end
-
-    return isFunction(x) and x or default
+    local default = function( k, v ) return v == x end          return isFunction(x) and x or default
 
 end
 
@@ -79,13 +72,7 @@ local function find( tbl, x )
 
     local isValid = isValid( tbl, x )
 
-    for k,v in pairs(tbl) do
-
-        if isValid( k, v ) then return pair( k, v ) end
-    
-    end
-
-    return {}
+    for k,v in pairs(tbl) do if isValid( k, v ) then return pair( k, v ) end end            return {}
     
 end
 
@@ -144,32 +131,22 @@ local function minus( tbl, val )
 
     local t = {}        local key = find( tbl, val ).key
 
-    for k,v in pairs(tbl) do if k ~= key then t[k] = v end end
-
-    return meta( t, tbl )
+    for k,v in pairs(tbl) do if k ~= key then t[k] = v end end          return meta( t, tbl )
 
 end
 
-local function isEmpty(t)
-  
-    local next = next(t)      return next == nil
-    
-end
+local function isEmpty(t) local next = next(t)      return next == nil end
 
 
 local mergeLibs = require( Astro.Path .. "mergeLibs" )
 
 astro = {
     
-    deepMerge = deepMerge,
+    deepMerge = deepMerge,          merge = merge,          keys = keys,        values = values,
 
-    merge = merge,          keys = keys,        values = values,
-
-    random = random,        find = find,        filter = filter,        
+    random = random,        find = find,        filter = filter,        contains = contains,
     
-    contains = contains,        sub = sub,
-    
-    minus = minus,      isEmpty = isEmpty,      pair = pair,
+    sub = sub,          minus = minus,      isEmpty = isEmpty,      pair = pair,
 
     table = function(input) return mergeLibs( input, table ) end
 

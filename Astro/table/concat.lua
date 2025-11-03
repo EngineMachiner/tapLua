@@ -18,8 +18,8 @@ local isTable = astro.isTable               local isNil = astro.isNil
 
 astro = Astro.Config.Concat
 
-local showID = astro.showID                         local showIndex = astro.showIndex
-local wideMode = astro.wideMode                     local indentation = astro.indentation
+local showID = astro.showID                 local showIndex = astro.showIndex
+local wideMode = astro.wideMode             local indentation = astro.indentation
 local keyQuotes = astro.keyQuotes
 
 ------------------------------------------------------------------------------------------------------------------------
@@ -53,11 +53,7 @@ local function key(k)
     
     if keyQuotes and isString(k) then key = quotes end
     
-    if showIndex then key = brackets(quotes) else
-      
-        key = isNumber(k) and '' or key
-      
-    end
+    if showIndex then key = brackets(quotes) else key = isNumber(k) and '' or key end
 
     return key
 
@@ -72,9 +68,7 @@ local sequences = {
 
 local function escape(a)
 
-    for k,v in pairs(sequences) do a = a:gsub( k, v ) end
-
-    return a
+    for k,v in pairs(sequences) do a = a:gsub( k, v ) end       return a
 
 end
 
@@ -82,9 +76,7 @@ local function format(a)
 
     local s = tostring(a)       s = escape(s)       if isString(a) then return quotes(s) end
 
-    if not showID and isTable(a) then return '' end -- Remove the table address.
-
-    return s
+    if not showID and isTable(a) then return '' end --[[ Remove the table address. ]]       return s
 
 end
 
@@ -92,9 +84,7 @@ end
 
 local function name(a)
     
-    local s = format(a)         local isEmpty = s == ''
-    
-    return isEmpty and s or concat( s, ' ' )
+    local s = format(a)         local isEmpty = s == ''         return isEmpty and s or concat( s, ' ' )
 
 end
 
@@ -116,15 +106,13 @@ end
 
 local function cycleName(name)
 
-  if not showID then return '' end              name = name:sub( 1, #name - 1 )
-  
-  return concat( ' ', name )
+    if not showID then return '' end          name = name:sub( 1, #name - 1 )         return concat( ' ', name )
   
 end
 
 local function notEmpty(a)
     
-    return isTable(a) and not table.isEmpty(a) 
+    return isTable(a) and not table.isEmpty(a)
 
 end
 
@@ -157,7 +145,7 @@ local function pack(tbl)
 
     local function add( s, indent )
         
-        indent = indent or 0            indent = indentation:rep(indent)
+        indent = indent or 0                indent = indentation:rep(indent)
         
         s = concat( indent, s )             table.insert( t, s )
     
@@ -171,7 +159,7 @@ local function pack(tbl)
 
         if isTable(v) then recursivePack( v, indent ) return end
 
-        local name = format(v)        add(name)
+        local name = format(v)          add(name)
 
     end
 
@@ -201,12 +189,12 @@ local function pack(tbl)
 
             local a, b = next( copy, k )        
             
-            firstKey = firstKey or k            if isNil(a) then lastKey = k end
+            firstKey = firstKey or k                if isNil(a) then lastKey = k end
             
             local isFirst = k == firstKey           local isLast = k == lastKey
             
             
-            local indent = indent + 1           local isGap = isGap(v, b)
+            local indent = indent + 1               local isGap = isGap(v, b)
 
             local n = wideMode and "\n\n" or '\n'
             

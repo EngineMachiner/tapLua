@@ -20,8 +20,6 @@ return function( a, b, distinct )
     
     end
 
-    for k,v in pairs(a) do if isValid(k, v) then t[k] = v end end
-
-    return meta( t, a )
+    for k,v in pairs(a) do if isValid( k, v ) then t[k] = v end end           return meta( t, a )
 
 end

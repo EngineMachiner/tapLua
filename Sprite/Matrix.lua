@@ -23,9 +23,7 @@
 
 ]]
 
-local Vector = Astro.Vector           local astro = Astro.Table
-
-local input = ...
+local Vector = Astro.Vector           local astro = Astro.Table             local input = ...
 
 
 -- Gotta do set defaults with some metamethods first...
@@ -34,20 +32,20 @@ local defaults = {
 
     CornerCrop = Vector(),          CenterCrop = Vector(),
     
-    Size = Vector(),         Zoom = 1
+    Size = Vector(),                Zoom = 1
 
 }
 
 astro.Meta.setIndex( input, defaults )
 
 
-local Size = input.Size             local Zoom = input.Zoom
+local Size = input.Size                     local Zoom = input.Zoom
 
 local CornerCrop = input.CornerCrop         local CenterCrop = input.CenterCrop
 
 local function onChildren(self)
 
-    local p = self:GetParent()          local size = self:GetCroppedZoomedSize()
+    local p = self:GetParent()              local size = self:GetCroppedZoomedSize()
 
     p.Size = p.Size + size
 
@@ -57,7 +55,7 @@ end
 
 local function getOffset(self)
    
-    local cropX = CenterCrop.x          local cropY = CenterCrop.y
+    local cropX = CenterCrop.x              local cropY = CenterCrop.y
 
     self:cropHorizontally( cropX ):cropVertically( cropY )
 
@@ -196,9 +194,7 @@ return Def.ActorFrame {
 
         PostInitCommand=function(self)
             
-            self:setPos( - offset )
-
-            self:cropleft( CornerCrop.x ):croptop( CornerCrop.y )
+            self:setPos( - offset ):cropleft( CornerCrop.x ):croptop( CornerCrop.y )
         
         end
 

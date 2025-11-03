@@ -22,7 +22,7 @@
 
 ]]
 
-local input = ...       local n = input.Number          local background = input.background
+local input = ...               local n = input.Number              local background = input.background
 
 local mask = input.mask         local sprite = input.sprite
 
@@ -54,12 +54,9 @@ local t = Def.ActorFrame {
 
 local function update( self, i )
 
-    local v = value(true)       local raw = value()
+    local v = value(true)           local raw = value()
 
-
-    if self.value == v or raw == '0' then return end
-
-    self.value = v
+    if self.value == v or raw == '0' then return end        self.value = v
 
 
     if #raw < 10 - i then return end
@@ -90,9 +87,7 @@ for i = 1, n do
 
             local y = h1 * zoomY - h2           y = y * 0.5
 
-            self:y(y):zoomy( self:GetZoomY() * zoomY )
-            
-            tapLua.Actor.invertedMaskDest(self)
+            self:y(y):zoomy( self:GetZoomY() * zoomY )          tapLua.Actor.invertedMaskDest(self)
 
             
             self.Height = h2            self.Limit = y - h1
@@ -103,48 +98,28 @@ for i = 1, n do
 
         ScrollCommand=function(self)
 
-            local last = self.last or '0'
+            local last = self.last or '0'           local new = self:GetParent().value
             
-            local new = self:GetParent().value        new = new:Astro():subChar(i)
-
-            if new == last then return end
+            new = new:Astro():subChar(i)            if new == last then return end
 
 
-            local n = length( new, last )               self.last = new
+            local n = length( new, last )           self.last = new
 
-
-            local y1 = self:GetY() - self.Height * n
-
-            self:linear( n * 0.125 ):y(y1)
+            local y1 = self:GetY() - self.Height * n        self:linear( n * 0.125 ):y(y1)
             
 
-            --[[
-            
-                It's an endless illusion. :D
+            -- It's an endless illusion. Set the position back to keep scrolling next time.
 
-                Set the position back to keep scrolling next time.
-
-            ]] 
-
-            local y2 = y1 + self.Height * 10
-
-            if y1 <= self.Limit then self:sleep(0):y(y2) end
+            local y2 = y1 + self.Height * 10            if y1 <= self.Limit then self:sleep(0):y(y2) end
 
         end
 
     }
 
 
-    local background = background(i) .. {
-
-        UpdateCommand=function(self) update( self, i ) end
-
-    }  
+    local background = background(i) .. { UpdateCommand=function(self) update( self, i ) end }  
     
-    table.insert( background, Sprite )
-
-
-    t[#t+1] = background
+    table.insert( background, Sprite )          t[#t+1] = background
 
 end
 

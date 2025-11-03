@@ -1,8 +1,12 @@
 
 local Vector = Astro.Vector
 
--- Returns a function that returns traversed tile array like a spiral.
--- self is the ActorFrame parent used in Tile.lua.
+--[[
+
+    Returns a function that returns traversed tile array like a spiral.
+    self is the ActorFrame parent used in Tile.lua.
+
+]]
 
 return function(self)
 
@@ -25,14 +29,12 @@ return function(self)
 
         for x = pos.x, lim.x do add( i + 1 ) end        pos.y = pos.y + 1
 
-
         if not onRange('x') then return end
 
 
         -- Traverse top to bottom.
 
         for y = pos.y, lim.y do add( i + columns ) end        lim.x = lim.x - 1
-
 
         if not onRange('y') then return end
 

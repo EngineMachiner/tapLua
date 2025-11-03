@@ -12,9 +12,7 @@ local function isFalse(a) return a == false end
 
 local function readOnly( tbl, recursive )
 
-    local isReadOnly = tbl.readOnly
-
-    if isFalse(isReadOnly) then return tbl end
+    local isReadOnly = tbl.readOnly         if isFalse(isReadOnly) then return tbl end
 
 
     recursive = isNil(recursive) and true
@@ -34,9 +32,7 @@ local function readOnly( tbl, recursive )
     onNested()
 
 
-    local t, meta = {}, getmetatable(tbl)
-    
-    meta = isTable(meta) and meta or {}
+    local t, meta = {}, getmetatable(tbl)           meta = isTable(meta) and meta or {}
 
 
     meta.__index = tbl          meta.__newindex = onWrite

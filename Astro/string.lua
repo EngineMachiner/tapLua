@@ -19,11 +19,9 @@ local function endsWith( s1, s2 ) return s1:match( s2 .. '$' ) end
 
 local t = {
 
-    subChar = subChar,      first = first,      last = last,
-
-    isEmpty = isEmpty,          isBlank = isBlank,
-
-    startsWith = startsWith,            endsWith = endsWith
+    subChar = subChar,      first = first,      last = last,        isEmpty = isEmpty,
+    
+    isBlank = isBlank,      startsWith = startsWith,        endsWith = endsWith
 
 }
 
@@ -37,9 +35,7 @@ string.Astro = function(s)
     
     end
 
-    local setIndex = Astro.Table.Meta.setIndex
-
-    return setIndex( {}, __index )
+    local setIndex = Astro.Table.Meta.setIndex          return setIndex( {}, __index )
 
 end
 

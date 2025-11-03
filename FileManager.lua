@@ -28,7 +28,7 @@ local function matches( tbl, val )
 
 end
 
-local function currentPath()
+local function currentFile()
 
     local path = debug.getinfo( 3, "S" )       path = path.source
 
@@ -39,14 +39,22 @@ local function currentPath()
 end
 
 
-local function LoadDirectory( directory, blacklist, recursive )
+local load = LoadModule
 
-    blacklist = blacklist or {}         table.insert( blacklist, currentPath() )
+local function LoadModule(path) -- Loads and warns for easier debugging in the log.
+
+    print( "Loading.. " .. path )            load(path)
+
+end
+
+local function LoadDirectory( directory, blacklist, recursive )
 
     if isString(directory) then directory = paths( directory ) end
 
     if isString(blacklist) then blacklist = { blacklist } end
 
+    blacklist = blacklist or {}         table.insert( blacklist, currentFile() )
+    
 
     local function isBlacklisted(path)
 
@@ -61,7 +69,7 @@ local function LoadDirectory( directory, blacklist, recursive )
 
         local endsWith = path:Astro():endsWith("%.lua")
 
-        if endsWith then print(path) dofile(path) return end
+        if endsWith then print( "Loading.. " .. path ) dofile(path) return end
         
 
         local isValid = not recursive or not isDirectory(path)
@@ -122,4 +130,6 @@ local function getFiles( directory, patterns, recursive )
 
 end
 
-tapLua.FILEMAN = { LoadDirectory = LoadDirectory,      getFiles = getFiles }
+tapLua.FILEMAN = { LoadModule = LoadModule,     LoadDirectory = LoadDirectory,      getFiles = getFiles }
+
+print("Loading.. FileManager.lua")

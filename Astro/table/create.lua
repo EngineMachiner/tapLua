@@ -15,9 +15,7 @@ return function(input)
 
     return function(t)
         
-        t = t or {}         local table = astro.table(input)
-        
-        return meta.setIndex( t, table )
+        t = t or {}         local table = astro.table(input)        return meta.setIndex( t, table )
     
     end
     

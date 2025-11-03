@@ -13,37 +13,37 @@ local function Load( path, ... )
 
 end
 
-tapLua = { isLegacy = isLegacy,     Load = Load }
+local function resolvePath( path, stackLevel )
+
+    stackLevel = stackLevel or 1            if not path then return end
+
+    if path:Astro():startsWith("[\\/]") then return path end
+
+    return ResolveRelativePath( path, stackLevel + 1 )
+
+end
+
+tapLua = { isLegacy = isLegacy,     Load = Load,    resolvePath = resolvePath }
 
 
 local path = "Appearance/Themes/_fallback/Modules/tapLua/"
 
-path = isLegacy() and "Modules/tapLua/" or path
-
-tapLua.Path = path
-
-
-local p = path .. "Astro/"            require(p)(p)
-
-dofile( path .. "Legacy.lua" )
+path = isLegacy() and "Modules/tapLua/" or path             tapLua.Path = path
 
 
 local subPath = "tapLua/"
 
+local p = path .. "Astro/"      require(p)(p)       dofile( path .. "Legacy.lua" )
+
+
 -- Modules that need to be loaded ahead go here...
 
-LoadModule( subPath .. "FileManager.lua" )
+LoadModule( subPath .. "FileManager.lua" )          local FILEMAN = tapLua.FILEMAN
 
 
--- Exclude tapLua.lua because it would loop forever.
--- Exclude scripts already loaded.
+local blacklist = { "FileManager.lua", "Legacy.lua" } -- Excluded.
 
-local blacklist = { "FileManager.lua", "Legacy.lua" }
-
-tapLua.FILEMAN.LoadDirectory( path, blacklist )
-
-
-LoadModule( subPath .. "Actor/Actor.lua" )
+FILEMAN.LoadDirectory( path, blacklist )            FILEMAN.LoadModule( subPath .. "Actor/Actor.lua" )
 
 
 local Vector = Astro.Vector
@@ -51,17 +51,6 @@ local Vector = Astro.Vector
 local function screenSize() return Vector( SCREEN_WIDTH, SCREEN_HEIGHT ) end
 
 local function center() return Vector( SCREEN_CENTER_X, SCREEN_CENTER_Y ) end
-
-
-local function resolvePath( path, stackLevel )
-
-    stackLevel = stackLevel or 2            if not path then return end
-
-    if path:Astro():startsWith("[\\/]") then return path end
-
-    return "/" .. ResolveRelativePath( path, stackLevel )
-
-end
 
 
 local function spriteMatrix(path)
@@ -100,7 +89,7 @@ end
 
 local t = { 
     
-    screenSize = screenSize,    center = center,    resolvePath = resolvePath,          spriteMatrix = spriteMatrix,
+    screenSize = screenSize,    center = center,    spriteMatrix = spriteMatrix,
 
     scaleFOV = scaleFOV,            verticalFOV = verticalFOV,          depthOffset = depthOffset
 

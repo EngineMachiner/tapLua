@@ -6,7 +6,9 @@ local isLegacy = tapLua.isLegacy()          if not isLegacy then return end
 
 local function loadModule( path, ... )
 
-    local f = loadfile( "Modules/" .. path )            return ... and f(...) or f()
+    path = "Modules/" .. path           local f = loadfile(path)
+    
+    if not f then error( "Failed to load file: " .. path ) end          return ... and f(...) or f()
 
 end
 

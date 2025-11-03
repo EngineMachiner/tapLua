@@ -10,9 +10,7 @@ local Vector = Astro.Vector -- Default builder => Simple operations.
 
 local function builder( input )
 
-    if not input then return Vector end
-
-    if isFunction(input) then return input end
+    if not input then return Vector end         if isFunction(input) then return input end
 
 end
 
@@ -20,11 +18,9 @@ end
 
 local function get( input, ... )
 
-    local Vector = builder(input)       local a, b, c = ...
+    local Vector = builder(input)                   local a, b, c = ...
 
-    if not Vector then return a, b, c end
-
-    return Vector( a, b, c )
+    if not Vector then return a, b, c end           return Vector( a, b, c )
 
 end
 
@@ -58,7 +54,7 @@ end
 local GetCroppedZoomedSize = not tapLua.isLegacy() and GetCroppedZoomedSize
 
 
-local function GetZoomCoords( self, input )
+local function GetZoomVector( self, input )
 
     return get( input, self:GetZoomX(), self:GetZoomY(), self:GetZoomZ() )
 
@@ -93,7 +89,7 @@ end
 
 local function setZoomVector( self, vector ) 
     
-    local x, y, z = vector:unpack()         self:zoomto( x, y ):zoomz(z)
+    local x, y, z = vector:unpack()         self:zoomx(x):zoomy(y):zoomz(z)
 
     return self
 
@@ -101,7 +97,7 @@ end
 
 local function setPos( self, vector )
     
-    local x, y, z = vector:unpack()         return self:xy( x, y ):z(z)
+    local x, y, z = vector:unpack()         return self:x(x):y(y):z(z)
 
 end
 
@@ -109,13 +105,9 @@ local function setEffectMagnitude( self, vector ) return self:effectmagnitude( v
 
 local t = {
     
-    GetRotationVector = GetRotationVector,
-
-    GetSize = GetSize,      GetZoomedSize = GetZoomedSize,
+    GetRotationVector = GetRotationVector,      GetSize = GetSize,      GetZoomedSize = GetZoomedSize,
     
-    GetCroppedZoomedSize = GetCroppedZoomedSize,
-    
-    GetZoomCoords = GetZoomCoords,
+    GetCroppedZoomedSize = GetCroppedZoomedSize,        GetZoomVector = GetZoomVector,
     
     GetPos = GetPos,      GetDest = GetDest,
 
@@ -126,9 +118,7 @@ local t = {
 
 }
 
-tapLua.Actor.Vector = t -- Will be removed in Actor.lua
-
-astro.merge( tapLua.Actor, t )
+tapLua.Actor.Vector = t --[[ Will be removed in Actor.lua ]]            astro.merge( tapLua.Actor, t )
 
 
 -- Sprite
@@ -148,3 +138,24 @@ end
 local t = { scrollTexture = scrollTexture,      moveTextureBy = moveTextureBy }
 
 astro.merge( tapLua.Sprite, t )
+
+
+local function imageSize( texture, input )
+
+    return get( input, texture:GetImageWidth(), texture:GetImageHeight() )
+
+end
+
+local function sourceSize( texture, input )
+
+    return get( input, texture:GetImageWidth(), texture:GetImageHeight() )
+
+end
+
+local function size( texture, input )
+    
+    return get( input, texture:GetTextureWidth(), texture:GetTextureHeight() )
+
+end
+
+tapLua.Texture = { imageSize = imageSize,      sourceSize = sourceSize,        size = size }
