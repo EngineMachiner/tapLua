@@ -87,11 +87,15 @@ local function depthOffset( x, z, fov )
 end
 
 
+local function currentBPM() return GAMESTATE:GetSongBPS() * 60 end
+
 local t = { 
     
     screenSize = screenSize,    center = center,    spriteMatrix = spriteMatrix,
 
-    scaleFOV = scaleFOV,            verticalFOV = verticalFOV,          depthOffset = depthOffset
+    scaleFOV = scaleFOV,            verticalFOV = verticalFOV,          depthOffset = depthOffset,
+
+    currentBPM = currentBPM
 
 }
 

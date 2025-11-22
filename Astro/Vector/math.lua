@@ -35,11 +35,11 @@ local function unpack(a) return a.x, a.y, a.z end
 
 local function angle(a)
 
-    local vector = copy(a)                  vector = unit(vector)
+    local vector = unit(a)
     
-    local x, y = unpack(vector)             local angle = safeDivision( y, x )
+    local x, y = unpack(vector)             local angle = math.atan2( y, x )
     
-    angle = math.atan(angle)                angle = math.deg(angle)                 return angle % 360
+    angle = math.deg(angle)                 return angle % 360
 
 end
 

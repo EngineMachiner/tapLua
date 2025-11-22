@@ -127,9 +127,7 @@ setMeta( actorFrame, ActorFrame )
 
 local function ActorFrameTexture( input )
     
-    local base = { Class = "ActorFrameTexture",        InitCommand = InitCommand(tapLua) }
-
-    input = merge( base, input )            return Actor(input)
+    input.Class = "ActorFrameTexture"           return Actor(input)
 
 end
 

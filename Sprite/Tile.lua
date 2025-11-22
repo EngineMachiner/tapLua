@@ -20,11 +20,13 @@ matrix = matrix and matrix(screenMatrix) or screenMatrix
 local columns, rows = matrix:unpack()           centerOffset = centerOffset(matrix)
 
 
+local size = Renderer:GetZoomedSize()
+
 local t = tapLua.ActorFrame {
     
     InitCommand=function(self)
 
-        self.Matrix = matrix            local size = Renderer:GetZoomedSize()
+        self.Matrix = matrix
         
         self:setsize( size.x * columns, size.y * rows )         self:zoom(zoom):playcommand("PostInit")
 

@@ -103,6 +103,8 @@ end
 
 local function setEffectMagnitude( self, vector ) return self:effectmagnitude( vector:unpack() ) end
 
+local function swapSize(self) return self:setsize( self:GetHeight(), self:GetWidth() ) end
+
 local t = {
     
     GetRotationVector = GetRotationVector,      GetSize = GetSize,      GetZoomedSize = GetZoomedSize,
@@ -114,9 +116,14 @@ local t = {
 
     setRotation = setRotation,          setSizeVector = setSizeVector,
 
-    setZoomVector = setZoomVector,          setPos = setPos,        setEffectMagnitude = setEffectMagnitude
+    setZoomVector = setZoomVector,          setPos = setPos,        setEffectMagnitude = setEffectMagnitude,
+
+
+    swapSize = swapSize
 
 }
+
+if tapLua.isLegacy() then t.xyz = function( self, x,y,z ) self:xy(x,y):z(z) end end
 
 tapLua.Actor.Vector = t --[[ Will be removed in Actor.lua ]]            astro.merge( tapLua.Actor, t )
 

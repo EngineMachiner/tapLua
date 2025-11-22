@@ -16,7 +16,9 @@ end
 
 local function runTimers(self)
 
-    local timers = self.tapLua.Timers            for k,v in pairs(timers) do runTimer( self, v ) end
+    local timers = self.tapLua.Timers
+    
+    for k,v in pairs(timers) do runTimer( self, v ) end         return self
 
 end
 
