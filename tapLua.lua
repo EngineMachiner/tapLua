@@ -13,13 +13,19 @@ local function Load( path, ... )
 
 end
 
+local function startsWith(s) return s:Astro():startsWith("[\\/]") end
+
 local function resolvePath( path, stackLevel )
 
     stackLevel = stackLevel or 1            if not path then return end
 
-    if path:Astro():startsWith("[\\/]") then return path end
+    if startsWith(path) then return path end
 
-    return ResolveRelativePath( path, stackLevel + 1 )
+    local path = ResolveRelativePath( path, stackLevel + 1 )
+
+    if not startsWith(path) then path = "/" .. path end
+
+    return path
 
 end
 
