@@ -47,11 +47,19 @@ echo "Done."
 
 cat << EOF
 
-Add the renderer in ScreenSystemLayer aux as a persistent actor:
-tapLua.Load(\"Sprite/Renderer\")
+Add the persistent actors as children of _fallback's ScreenSystemLayer:
+
+return tapLua.PersistentActors
 
 EOF
 
 read -p "Nano will open. Press any key to continue."
 
 sudo nano "$BGANIMATIONS/ScreenSystemLayer aux.lua"
+
+
+cat << EOF
+
+Remember, if the theme overrides the ScreenSystemLayer you have to add the children there as well.
+
+EOF

@@ -44,7 +44,9 @@ Be aware that to successfully add the actors, it's important that you have a bas
 
 ---
 
-  3. Add the renderer as a persistent actor:
+  3. Add the persistent actors as children of _fallback's ScreenSystemLayer:
   ```lua
-  tapLua.Load("Sprite/Renderer") -- fallbacks's ScreenSystemLayer aux.lua
+  return tapLua.PersistentActors -- fallbacks's ScreenSystemLayer aux.lua
   ```
+
+Remember, if the theme overrides the ScreenSystemLayer you have to add the children there as well.
