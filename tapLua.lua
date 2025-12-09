@@ -47,9 +47,11 @@ local p = path .. "Astro/"      require(p)(p)       dofile( path .. "Legacy.lua"
 LoadModule( subPath .. "FileManager.lua" )          local FILEMAN = tapLua.FILEMAN
 
 
-local blacklist = { "FileManager.lua", "Legacy.lua" } -- Excluded.
+local blacklist = { "FileManager.lua", "Legacy.lua", "Theme.lua" } -- Excluded.
 
 FILEMAN.LoadDirectory( path, blacklist )            FILEMAN.LoadModule( subPath .. "Actor/Actor.lua" )
+
+FILEMAN.LoadModule( subPath .. "Theme.lua" )
 
 
 local Vector = Astro.Vector

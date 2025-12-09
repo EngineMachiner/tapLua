@@ -41,7 +41,9 @@ end
 
 local load = LoadModule
 
-local function LoadModule(path) -- Loads and warns for easier debugging in the log.
+local function LoadModule(path)
+
+    -- Loads and warns for easier debugging in the log. Only shows up in older builds :(
 
     print( "Loading.. " .. path )            load(path)
 
