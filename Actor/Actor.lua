@@ -141,7 +141,7 @@ local function Text( input )
 end
 
 
-local Model = {}        tapLua.Model = Model        local modelKeys = { "Meshes", "Materials", "Bones" }
+local modelKeys = { "Meshes", "Materials", "Bones" }
 
 local function setupFile( tbl, path )
 
@@ -149,16 +149,17 @@ local function setupFile( tbl, path )
 
 end
 
-local function model( input )
+local function Model( input )
 
     for i,v in ipairs( modelKeys ) do input[v] = resolvePath( input[v] ) end
 
-    input.Class = "Model"        input.setupFile = setupFile        return Actor(input)
+    input.Class = "Model"           input.setupFile = setupFile
+    
+    local File = input.File         if File then input:setupFile(File) end
+
+    return Actor(input)
 
 end
-
-setMeta( model, Model )
-
 
 -- Additional actors.
 
