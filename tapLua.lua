@@ -97,13 +97,21 @@ end
 
 local function currentBPM() return GAMESTATE:GetSongBPS() * 60 end
 
+local function shadersEnabled()
+    
+    local p = "CustomShadersDisabled" -- Shaders are supported in newer OutFox builds only.
+
+    return PREFSMAN:PreferenceExists(p) and not PREFSMAN:GetPreference(p)
+
+end
+
 local t = { 
     
     screenSize = screenSize,    center = center,    spriteMatrix = spriteMatrix,
 
     scaleFOV = scaleFOV,            verticalFOV = verticalFOV,          depthOffset = depthOffset,
 
-    currentBPM = currentBPM
+    currentBPM = currentBPM,        shadersEnabled = shadersEnabled
 
 }
 
