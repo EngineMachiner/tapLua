@@ -1,9 +1,9 @@
 
 -- https://en.wikipedia.org/wiki/Prototype-based_programming
 
-local astro = Astro.Type                local isFunction = astro.isFunction
+local astro = Astro.Type                        local isFunction = astro.isFunction
 
-local isTexture = tapLua.Type.isTexture
+local isTexture = tapLua.Type.isTexture         local isString = astro.isString
 
 
 astro = Astro.Table                     local filter = astro.filter
@@ -49,7 +49,7 @@ end
 
 -- Get and filter all the commands of an actor table.
 
-local function commands( key, value ) return key:Astro():endsWith("Command") end
+local function commands( key, value ) return isString(key) and key:Astro():endsWith("Command") end
 
 Actor.commands = function(tbl) return filter( tbl, commands ) end
 
