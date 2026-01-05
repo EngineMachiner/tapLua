@@ -75,23 +75,21 @@ end
 
 local function setRotation( self, vector )
     
-    local x, y, z = vector:unpack()         self:rotationx(x):rotationy(y):rotationz(z)
-
-    return self
+    local x, y, z = vector:unpack()         return self:rotationx(x):rotationy(y):rotationz(z)
 
 end
 
-local function setSizeVector( self, vector ) 
-    
-    self:setsize( vector:unpack() )         return self
-
-end
+local function setSizeVector( self, vector ) return self:setsize( vector:unpack() ) end
 
 local function setZoomVector( self, vector ) 
     
-    local x, y, z = vector:unpack()         self:zoomx(x):zoomy(y):zoomz(z)
+    local x, y, z = vector:unpack()         return self:zoomx(x):zoomy(y):zoomz(z)
 
-    return self
+end
+
+local function addPos( self, vector )
+
+    local x, y, z = vector:unpack()         return self:addx(x):addy(y):addz(z)
 
 end
 
@@ -116,7 +114,9 @@ local t = {
 
     setRotation = setRotation,          setSizeVector = setSizeVector,
 
-    setZoomVector = setZoomVector,          setPos = setPos,        setEffectMagnitude = setEffectMagnitude,
+    setZoomVector = setZoomVector,          setPos = setPos,        addPos = addPos,
+    
+    setEffectMagnitude = setEffectMagnitude,
 
 
     swapSize = swapSize
@@ -125,22 +125,18 @@ local t = {
 
 if tapLua.isLegacy() then t.xyz = function( self, x,y,z ) self:xy(x,y):z(z) end end
 
-tapLua.Actor.Vector = t --[[ Will be removed in Actor.lua ]]            astro.merge( tapLua.Actor, t )
+tapLua.Actor.Vector = t         astro.merge( tapLua.Actor, t )
 
 
--- Sprite
+-- Sprite functions.
 
 local function scrollTexture( self, vector )
 
-    vector = - vector       self:texcoordvelocity( vector:unpack() )        return self
+    vector = - vector       return self:texcoordvelocity( vector:unpack() )
 
 end
 
-local function moveTextureBy( self, vector )
-
-    self:addimagecoords( vector:unpack() )          return self
-
-end
+local function moveTextureBy( self, vector ) return self:addimagecoords( vector:unpack() ) end
 
 local t = { scrollTexture = scrollTexture,      moveTextureBy = moveTextureBy }
 
