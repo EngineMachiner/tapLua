@@ -1,9 +1,9 @@
 
--- This is hacky but ¯\_(ツ)_/¯
+-- This is hacky but ¯\_(ツ)_/¯         -- A RageTexture is userdata.
 
 -- Only classes from the "Def" table have the "Class" key.
 
--- A RageTexture is userdata.
+-- TODO: Use __concat function to check if an object is an def actor table?
 
 local astro = Astro.Type
 

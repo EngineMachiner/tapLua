@@ -1,6 +1,8 @@
 
 local Vector = Astro.Vector             local centerOffset = Astro.Layout.centerOffset
 
+local isFunction = Astro.Type.isFunction
+
 
 local input = ...          local zoom = input.Zoom          local Sprite = input.Sprite
 
@@ -12,10 +14,7 @@ local Renderer = tapLua.Sprite.Renderer         Renderer:LoadBy(Texture):zoom(zo
 if onPreload then onPreload() end               zoom = Renderer:GetZoom()
 
 
-local matrix = input.Matrix                     local screenMatrix = Renderer:screenMatrix()
-
-matrix = matrix and matrix(screenMatrix) or screenMatrix
-
+local matrix = input.Matrix or Renderer:screenMatrix()
 
 local columns, rows = matrix:unpack()           centerOffset = centerOffset(matrix)
 

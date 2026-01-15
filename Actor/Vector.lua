@@ -151,7 +151,7 @@ end
 
 local function sourceSize( texture, input )
 
-    return get( input, texture:GetImageWidth(), texture:GetImageHeight() )
+    return get( input, texture:GetSourceWidth(), texture:GetSourceHeight() )
 
 end
 

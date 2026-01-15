@@ -14,4 +14,13 @@ end
 local function safeDivision( a, b ) return b ~= 0 and a / b or 0 end
 local function safeModulo( a, b ) return b ~= 0 and a % b or 0 end
 
-return { nextPowerOfTwo = nextPowerOfTwo,           safeDivision = safeDivision,    safeModulo = safeModulo }
+local function isEven(a) return a % 2 == 0 end
+local function isOdd(a) return isEven( a + 1 ) end
+
+return {
+    
+    nextPowerOfTwo = nextPowerOfTwo,           safeDivision = safeDivision,    safeModulo = safeModulo,
+
+    isEven = isEven,        isOdd = isOdd
+
+}
