@@ -8,6 +8,8 @@ local input = ...          local zoom = input.Zoom          local Sprite = input
 
 local Texture = input.Texture                   local onPreload = input.onPreload
 
+local Spiral = input.Spiral
+
 
 local Renderer = tapLua.Sprite.Renderer         Renderer:LoadBy(Texture):zoom(zoom)
 
@@ -19,13 +21,20 @@ local matrix = input.Matrix or Renderer:screenMatrix()
 local columns, rows = matrix:unpack()           centerOffset = centerOffset(matrix)
 
 
+local function spiralIndex(self)
+
+    local matrix = self.TileParent.Spiral       local i = self.Index        return matrix[i]
+
+end
+
+
 local size = Renderer:GetZoomedSize()
 
 local t = tapLua.ActorFrame {
     
     InitCommand=function(self)
 
-        self.Matrix = matrix
+        self.Matrix = matrix            self.Spiral = Spiral and tapLua.Load( "Sprite/Spiral", matrix )
         
         self:setsize( size.x * columns, size.y * rows )         self:zoom(zoom):playcommand("PostInit")
 
@@ -43,6 +52,8 @@ local function add( i, j )
 
         InitCommand=function(self)
             
+            self.spiralIndex = spiralIndex
+
             self.Index = k           self.TileParent = self:GetParent():GetParent()
         
         end,
