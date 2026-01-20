@@ -3,9 +3,9 @@ local isString = Astro.Type.isString            local isTexture = tapLua.Type.is
 
 local functions = {
 
-    [isString] = function( self, path )
+    [isString] = function( self, ... )
         
-        local Load = self.LoadThreaded or self.Load         Load( self, path )
+        local Load = self.LoadThreaded or self.Load         Load( self, ... )
     
     end,
 
