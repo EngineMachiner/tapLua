@@ -1,0 +1,16 @@
+package = "astro"
+version = "0.1.0"
+lua = ">=5.1"
+
+[description]
+summary = "Lua library about tables, strings, vectors and more."
+maintainer = "Engine_Machiner"
+license = "MIT"
+labels = [ "datastructure", "debug", "math" ]
+
+[source]
+url = "git+https://github.com/EngineMachiner/Astro"
+branch = "main"
+
+[build]
+type = "builtin"
