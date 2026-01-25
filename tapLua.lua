@@ -15,13 +15,19 @@ end
 
 local function startsWith(s) return s:Astro():startsWith("[\\/]") end
 
+local FAILED_TO_RESOLVE_MESSAGE = "Failed to resolve path. Try not returning a tail call."
+
 local function resolvePath( path, stackLevel )
 
     stackLevel = stackLevel or 1            if not path then return end
 
     if startsWith(path) then return path end
 
+
     local path = ResolveRelativePath( path, stackLevel + 1 )
+
+    if not path then error( FAILED_TO_RESOLVE_MESSAGE ) end
+    
 
     if not startsWith(path) then path = "/" .. path end
 
