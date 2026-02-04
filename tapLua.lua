@@ -1,6 +1,8 @@
 
 local function isLegacy()
 
+    if not VersionDate then return true end -- Etterna.
+
     local version = VersionDate()           version = tonumber(version)
 
     return version < 20191216
