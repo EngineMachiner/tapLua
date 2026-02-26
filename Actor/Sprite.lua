@@ -1,4 +1,6 @@
 
+local Sprite = tapLua.Sprite
+
 local isString = Astro.Type.isString            local isTexture = tapLua.Type.isTexture
 
 local functions = {
@@ -13,12 +15,14 @@ local functions = {
 
 }
 
-local function LoadBy( self, x )
+Sprite.LoadBy = function( self, x )
 
-    for k,v in pairs(functions) do if k(x) then v( self, x ) break end end
-
-    return self
+    for k,v in pairs(functions) do if k(x) then v( self, x ) break end end          return self
 
 end
 
-tapLua.Sprite.LoadBy = LoadBy
+Sprite.setStateProperties = function( self, stateProperties )
+
+    self.stateProperties = stateProperties            return self:SetStateProperties(stateProperties)
+
+end

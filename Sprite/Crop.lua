@@ -1,13 +1,19 @@
 
 local Vector = Astro.Vector         local planeAxes = Vector.planeAxes
 
-local function matrixCrops( pos, size, offset )
+local function axisCrops( pos, size, offset )
 
-    pos = pos - 1           local left = pos * size         
-    
-    pos = pos + 1           local right = 1 - pos * size
+    local right = 1 - pos * size        pos = pos - 1       local left = pos * size
     
     return { left - offset,     right - offset }
+
+end
+
+local function statesCrops( pos, size )
+
+    local right = pos * size        pos = pos - 1       local left = pos * size
+    
+    return { left, right }
 
 end
 
@@ -27,9 +33,25 @@ local crops = {
         
         local size = 1 / matrix         local crops = {}          offset = offset or 0
 
-        for i,v in ipairs(planeAxes) do crops[v] = matrixCrops( pos[v], size[v], offset ) end
+        for i,v in ipairs(planeAxes) do crops[v] = axisCrops( pos[v], size[v], offset ) end
 
         return crops
+
+    end,
+
+    States = function(matrix)
+
+        local i, j = matrix:unpack()        local size = 1 / matrix         local t = {}
+
+        for j = 1, j do for i = 1, i do
+        
+            local x = statesCrops( i, size.x )        local y = statesCrops( j, size.y )
+
+            t[#t+1] = { Frame = 0, { x[1], y[1] }, { x[2], y[2] } }
+        
+        end end
+
+        return t        
 
     end
 
