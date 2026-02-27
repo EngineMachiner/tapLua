@@ -11,7 +11,7 @@ local Texture = input.Texture                   local onPreload = input.onPreloa
 local Spiral = input.Spiral
 
 
-local Renderer = tapLua.Sprite.Renderer         Renderer:LoadBy(Texture):zoom(zoom)
+local Renderer = tapLua.Sprite.Renderer         Renderer:Load(Texture):zoom(zoom)
 
 if onPreload then onPreload() end               zoom = Renderer:GetZoom()
 
