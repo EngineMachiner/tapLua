@@ -9,7 +9,11 @@ local function invertedMaskDest(self) self:MaskDest():ztestmode("ZTestMode_Write
 
 local function aspectRatio(self) return self:GetZoomedWidth() / self:GetZoomedHeight() end
 
-local function queueCommands( self, commands ) for k,v in pairs(commands) do self:queuecommand(v) end end
+local function queueCommands( self, commands )
+    
+    for k,v in pairs(commands) do self:queuecommand(v) end          return self
+
+end
 
 local t = {
 
