@@ -1,10 +1,7 @@
 
 -- Returns the rows and columns of sprites to cover the screen.
 
-local Vector = Astro.Vector                     local planeAxes = Vector.planeAxes
-
-local quantityIn = Astro.Layout.quantityIn
-
+local Vector = Astro.Vector                     local quantityIn = Astro.Layout.quantityIn
 
 local function screenMatrix(self)
 

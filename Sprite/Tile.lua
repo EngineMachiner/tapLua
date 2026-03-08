@@ -16,7 +16,10 @@ local Renderer = tapLua.Sprite.Renderer         Renderer:Load(Texture):zoom(zoom
 if onPreload then onPreload() end               zoom = Renderer:GetZoom()
 
 
-local matrix = input.Matrix or Renderer:screenMatrix()
+local matrix = input.Matrix         local matrix2 = Renderer:screenMatrix()
+
+if isFunction(matrix) then matrix = matrix(matrix2) end         matrix = matrix or matrix2
+
 
 local columns, rows = matrix:unpack()           centerOffset = centerOffset(matrix)
 

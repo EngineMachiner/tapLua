@@ -1,5 +1,5 @@
 
-local Vector = Astro.Vector             local isVector = Vector.isVector
+local Vector = Astro.Vector
 
 local spaceAxes = Vector.spaceAxes          local isNumber = Astro.Type.isNumber
 

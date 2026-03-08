@@ -3,9 +3,7 @@
 
 local astro = Astro.Type
 
-local isTable = astro.isTable
-
-local isFunction = astro.isFunction         local isNumber = astro.isNumber
+local isTable = astro.isTable               local isFunction = astro.isFunction
 
 
 local path = Astro.Path .. "table/"         local internal = require( path .. "internal" )
