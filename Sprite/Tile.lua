@@ -24,9 +24,11 @@ if isFunction(matrix) then matrix = matrix(matrix2) end         matrix = matrix 
 local columns, rows = matrix:unpack()           centerOffset = centerOffset(matrix)
 
 
-local function spiralIndex(self)
+local function spiralIndex( self, reversed )
 
-    local matrix = self.TileParent.Spiral       local i = self.Index        return matrix[i]
+    local matrix = self.TileParent.Spiral       local i = self.Index
+
+    local v = matrix[i]         if reversed then v = #matrix - v end        return v
 
 end
 
