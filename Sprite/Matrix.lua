@@ -77,8 +77,8 @@ local function sprite()
 
             -- Only for the center parts.
 
-            self.setWidth = function() self:SetWidth( Size.x * scale ) return self end
-            self.setHeight = function() self:SetHeight( Size.y * scale ) return self end
+            self.setWidth = function() return self:SetWidth( Size.x * scale ) end
+            self.setHeight = function() return self:SetHeight( Size.y * scale ) end
 
         end
 

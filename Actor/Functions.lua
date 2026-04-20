@@ -1,11 +1,13 @@
 
-local function cropHorizontally( self, float ) self:cropleft(float):cropright(float) return self end
-local function cropVertically( self, float ) self:croptop(float):cropbottom(float) return self end
+local function draworder( self, x ) self.drawOrder = x      return Actor.draworder( self, x ) end
 
-local function fadeHorizontally( self, float ) self:fadeleft(float):faderight(float) return self end
-local function fadeVertically( self, float ) self:fadetop(float):fadebottom(float) return self end
+local function cropHorizontally( self, float ) return self:cropleft(float):cropright(float) end
+local function cropVertically( self, float ) return self:croptop(float):cropbottom(float) end
 
-local function invertedMaskDest(self) self:MaskDest():ztestmode("ZTestMode_WriteOnFail") return self end
+local function fadeHorizontally( self, float ) return self:fadeleft(float):faderight(float) end
+local function fadeVertically( self, float ) return self:fadetop(float):fadebottom(float) end
+
+local function invertedMaskDest(self) return self:MaskDest():ztestmode("ZTestMode_WriteOnFail") end
 
 local function aspectRatio(self) return self:GetZoomedWidth() / self:GetZoomedHeight() end
 
@@ -17,6 +19,7 @@ end
 
 local t = {
 
+    draworder = draworder,
     cropHorizontally = cropHorizontally,        cropVertically = cropVertically,
     fadeHorizontally = fadeHorizontally,        fadeVertically = fadeVertically,
     invertedMaskDest = invertedMaskDest,        aspectRatio = aspectRatio,
