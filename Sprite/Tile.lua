@@ -20,6 +20,8 @@ local matrix = input.Matrix         local matrix2 = Renderer:screenMatrix()
 
 if isFunction(matrix) then matrix = matrix(matrix2) end         matrix = matrix or matrix2
 
+input.__Matrix = matrix
+
 
 local columns, rows = matrix:unpack()           centerOffset = centerOffset(matrix)
 
