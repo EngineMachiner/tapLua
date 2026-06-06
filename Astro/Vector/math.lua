@@ -81,7 +81,7 @@ local function maxComponent(vector) -- Returns a key-value pair with the key and
 
 end
 
-local function minComponent(vector) -- Returns a key-value pair with the key and maximum value of a vector.
+local function minComponent(vector) -- Returns a key-value pair with the key and minimum value of a vector.
 
     local minKey, minValue
 
